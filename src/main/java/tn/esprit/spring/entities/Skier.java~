@@ -23,11 +23,6 @@ import lombok.experimental.FieldDefaults;
 @Entity
 public class Skier implements Serializable {
 
-
-
-
-
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	Long numSkier;
