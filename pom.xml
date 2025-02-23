@@ -53,18 +53,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
-			<version>5.7.2</version> <!-- Adjust the version if needed -->
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-junit-jupiter</artifactId>
-			<version>4.0.0</version> <!-- Make sure this matches the version you're using -->
-			<scope>test</scope>
-		</dependency>
+
 	</dependencies>
 
 	<build>
