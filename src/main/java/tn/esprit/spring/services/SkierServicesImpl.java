@@ -2,8 +2,17 @@ package tn.esprit.spring.services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import tn.esprit.spring.entities.*;
-import tn.esprit.spring.repositories.*;
+import tn.esprit.spring.entities.Course;
+import tn.esprit.spring.entities.Piste;
+import tn.esprit.spring.entities.Registration;
+import tn.esprit.spring.entities.Skier;
+import tn.esprit.spring.entities.Subscription;
+import tn.esprit.spring.entities.TypeSubscription;
+import tn.esprit.spring.repositories.ICourseRepository;
+import tn.esprit.spring.repositories.IPisteRepository;
+import tn.esprit.spring.repositories.IRegistrationRepository;
+import tn.esprit.spring.repositories.ISkierRepository;
+import tn.esprit.spring.repositories.ISubscriptionRepository;
 
 import java.util.HashSet;
 import java.util.List;
@@ -11,7 +20,7 @@ import java.util.Set;
 
 @AllArgsConstructor
 @Service
-public class SkierServicesImpl implements ISkierServices {
+public class SkierServicesImpl implements tn.esprit.spring.services.ISkierServices {
 
     private ISkierRepository skierRepository;
 

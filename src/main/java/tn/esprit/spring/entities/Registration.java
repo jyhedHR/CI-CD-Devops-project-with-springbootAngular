@@ -32,8 +32,8 @@ public class Registration implements Serializable {
 
 	@JsonIgnore
 	@ManyToOne
-    Skier skier;
+	tn.esprit.spring.entities.Skier skier;
 	@JsonIgnore
 	@ManyToOne
-	Course course;
+	tn.esprit.spring.entities.Course course;
 }

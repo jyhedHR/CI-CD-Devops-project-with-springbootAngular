@@ -20,11 +20,19 @@ pipeline {
             }
         }
 
-        stage('Clean install') {
+        stage('Clean compile') {
             steps {
-                sh 'mvn clean install'
+                sh 'mvn clean compile'
+
             }
         }
+
+         stage('Test project') {
+              steps {
+                 sh 'mvn -Dtest=SkierServicesImplTest clean test'
+
+              }
+         }
 
         stage('Run SonarQube Analysis') {
             steps {
