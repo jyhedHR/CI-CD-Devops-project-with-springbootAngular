@@ -1,14 +1,16 @@
 package tn.esprit.spring.repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
+
+
 
 import org.springframework.data.repository.query.Param;
 import tn.esprit.spring.entities.*;
 
 import java.util.List;
 
-public interface IRegistrationRepository extends CrudRepository<Registration, Long> {
+public interface IRegistrationRepository extends JpaRepository<Registration, Long> {
 
     long countByCourseAndNumWeek(Course course, int numWeek);
     @Query("select reg.numWeek from Registration reg " +

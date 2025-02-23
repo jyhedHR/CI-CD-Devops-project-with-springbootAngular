@@ -23,6 +23,31 @@ public class RegistrationServicesImpl implements  IRegistrationServices{
 
 
     @Override
+    public List<Registration> retrieveAllRegistrations() {
+        return registrationRepository.findAll();
+    }
+
+    @Override
+    public Registration addRegistration(Registration registration) {
+        return registrationRepository.save(registration);
+    }
+
+    @Override
+    public Registration updateRegistration(Registration registration) {
+        return registrationRepository.save(registration);
+    }
+
+    @Override
+    public void deleteRegistration(Long numRegistration) {
+        registrationRepository.deleteById(numRegistration);
+    }
+
+    @Override
+    public Registration retrieveRegistration(Long numRegistration) {
+        return registrationRepository.findById(numRegistration).orElse(null);
+    }
+
+    @Override
     public Registration addRegistrationAndAssignToSkier(Registration registration, Long numSkier) {
         Skier skier = skierRepository.findById(numSkier).orElse(null);
         registration.setSkier(skier);
