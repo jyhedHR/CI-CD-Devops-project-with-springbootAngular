@@ -1,5 +1,8 @@
 package tn.esprit.spring.repositories;
 
+import tn.esprit.spring.entities.Course;
+import tn.esprit.spring.entities.Registration;
+import tn.esprit.spring.entities.Support;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

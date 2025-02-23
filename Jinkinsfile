@@ -25,6 +25,13 @@ pipeline {
             }
         }
 
+
+        stage(' test Projet') {
+            steps {
+                sh 'mvn -Dtest=SubscriptionServicesImplTest clean test '
+            }
+        }
+
         stage('SonarQube') {
             steps {
                 withSonarQubeEnv('SonarQube') {

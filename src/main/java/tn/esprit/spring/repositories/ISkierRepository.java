@@ -2,7 +2,6 @@ package tn.esprit.spring.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import org.springframework.data.jpa.repository.Query;
 import tn.esprit.spring.entities.Skier;
 import tn.esprit.spring.entities.Subscription;
 import tn.esprit.spring.entities.TypeSubscription;

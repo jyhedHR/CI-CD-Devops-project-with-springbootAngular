@@ -1,9 +1,12 @@
 package tn.esprit.spring.services;
 
+import tn.esprit.spring.entities.Course;
+import tn.esprit.spring.entities.Registration;
+import tn.esprit.spring.entities.Skier;
+import tn.esprit.spring.entities.Support;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import tn.esprit.spring.entities.*;
 import tn.esprit.spring.repositories.ICourseRepository;
 import tn.esprit.spring.repositories.IRegistrationRepository;
 import tn.esprit.spring.repositories.ISkierRepository;

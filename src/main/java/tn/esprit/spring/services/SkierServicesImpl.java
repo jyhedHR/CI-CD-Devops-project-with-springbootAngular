@@ -1,7 +1,9 @@
 package tn.esprit.spring.services;
 
+import tn.esprit.spring.repositories.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import tn.esprit.spring.entities.*;
 import tn.esprit.spring.entities.*;
 import tn.esprit.spring.repositories.*;
 

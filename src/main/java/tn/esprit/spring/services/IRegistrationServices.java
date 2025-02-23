@@ -1,5 +1,7 @@
 package tn.esprit.spring.services;
 
+import tn.esprit.spring.entities.Registration;
+import tn.esprit.spring.entities.Support;
 import tn.esprit.spring.entities.*;
 
 import java.util.List;
