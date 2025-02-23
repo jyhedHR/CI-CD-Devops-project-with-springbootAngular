@@ -34,7 +34,7 @@ pipeline {
  }
  stage('Test Stage') {
              steps {
-                 sh 'mvn -Dtest=tn.esprit.spring.services.RegistrationServiceImplTest test'
+                 sh 'mvn -X test'
              }
          }
  stage ('SonarQube analysis') {
