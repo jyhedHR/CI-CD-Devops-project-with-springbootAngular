@@ -13,7 +13,7 @@ pipeline {
 
         stage('Git Checkout') {
             steps {
-                git branch: 'f/jihedlrs',
+                git branch: 'Jihed_Lourassi_4TWIN5',
                     url: 'https://github.com/jyhedHR/4twin5_Group2_gestion-station-skier.git',
                     credentialsId: 'Gitttt'
             }
@@ -28,8 +28,8 @@ pipeline {
 
         stage(' test Projet') {
             steps {
-                sh 'mvn -Dtest=SubscriptionServicesImplTest clean test '
-            }
+                 sh 'mvn -Dtest=SubscriptionServicesImplTest clean test '
+             }
         }
 
         stage('SonarQube') {
