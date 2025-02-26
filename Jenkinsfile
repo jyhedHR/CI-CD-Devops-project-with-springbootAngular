@@ -64,7 +64,8 @@ stage('Build Docker Image') {
             steps {
             withCredentials([string(credentialsId: 'DockerHub', variable: 'DOCKER_ACCESS_TOKEN')]) {
                 sh 'echo $DOCKER_ACCESS_TOKEN | docker login -u eyanehdi --password-stdin'
-            sh 'docker push $DOCKER_IMAGE:$DOCKER_TAG'
+            sh 'docker tag eyanehdi:latest eyanehdi/eyanehdi:latest'
+                sh 'docker push eyanehdi/eyanehdi:latest'
             }
             }
         }
