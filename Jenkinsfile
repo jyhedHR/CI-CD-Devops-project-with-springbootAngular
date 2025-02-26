@@ -6,7 +6,7 @@ pipeline {
          JAVA_HOME = "/usr/lib/jvm/java-17-openjdk-amd64/"
          M2_HOME = "/opt/apache-maven-3.6.3"
          PATH = "$M2_HOME/bin:$PATH"
-         DOCKER_IMAGE = "eyanehdi"
+         DOCKER_IMAGE = "skierDevops"
          DOCKER_TAG = "latest"
 
 
@@ -64,8 +64,8 @@ stage('Build Docker Image') {
             steps {
             withCredentials([string(credentialsId: 'DockerHub', variable: 'DOCKER_ACCESS_TOKEN')]) {
                 sh 'echo $DOCKER_ACCESS_TOKEN | docker login -u eyanehdi --password-stdin'
-            sh 'docker tag eyanehdi:latest eyanehdi/eyanehdi:latest'
-                sh 'docker push eyanehdi/eyanehdi:latest'
+            sh 'docker tag eyanehdi:latest eyanehdi/$DOCKER_IMAGE:$DOCKER_TAG'
+                sh 'docker push eyanehdi/$DOCKER_IMAGE:$DOCKER_TAG'
             }
             }
         }
