@@ -14,7 +14,7 @@ pipeline {
 
         stage('Git Checkout') {
             steps {
-                git branch: 'f/jyhed',
+                git branch: 'Jihed_Horchani_4twin5',
                     url: 'https://github.com/jyhedHR/4twin5_Group2_gestion-station-skier.git',
                     credentialsId: 'Gitttt'
             }
@@ -27,12 +27,12 @@ pipeline {
             }
         }
 
-         stage('Test project') {
-              steps {
-                 sh 'mvn -Dtest=SkierServicesImplTest clean test'
 
-              }
-         }
+        stage(' test Projet') {
+            steps {
+                 sh 'mvn -Dtest=SkierServicesImplTest clean test'
+             }
+        }
 
         stage('Run SonarQube Analysis') {
             steps {
@@ -41,5 +41,6 @@ pipeline {
                 }
             }
         }
+
     }
 }
