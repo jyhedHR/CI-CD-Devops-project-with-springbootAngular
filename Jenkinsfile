@@ -62,8 +62,8 @@ stage('Build Docker Image') {
         }
         stage('Push Docker Image') {
             steps {
-            withCredentials([string(credentialsId: 'DockerHub', variable: 'DOCKER_PASSWORD')]) {
-                sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+            withCredentials([string(credentialsId: 'DockerHub',usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
                 sh 'docker push $DOCKER_IMAGE:$DOCKER_TAG'
             }
             }
