@@ -8,7 +8,7 @@ pipeline {
          PATH = "$M2_HOME/bin:$PATH"
          DOCKER_IMAGE = "eyanehdi"
          DOCKER_TAG = "latest"
-         DOCKER_USERNAME = "eyanehdi"
+
 
      }
 
@@ -62,9 +62,9 @@ stage('Build Docker Image') {
         }
         stage('Push Docker Image') {
             steps {
-            withCredentials([string(credentialsId: 'DockerHub',usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
-                sh 'docker push $DOCKER_IMAGE:$DOCKER_TAG'
+            withCredentials([string(credentialsId: 'DockerHubToken', variable: 'DOCKER_ACCESS_TOKEN')]) {
+                sh 'echo $DOCKER_ACCESS_TOKEN | docker login -u eyanehdi --password-stdin'
+            sh 'docker push $DOCKER_IMAGE:$DOCKER_TAG'
             }
             }
         }
