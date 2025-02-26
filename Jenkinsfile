@@ -8,6 +8,7 @@ pipeline {
          PATH = "$M2_HOME/bin:$PATH"
          DOCKER_IMAGE = "eyanehdi"
          DOCKER_TAG = "latest"
+         DOCKER_USERNAME = eyanehdi
 
      }
 
