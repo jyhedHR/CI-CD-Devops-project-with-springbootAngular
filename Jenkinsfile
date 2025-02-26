@@ -39,6 +39,13 @@ pipeline {
                  sh 'mvn -X test'
              }
       }
+      stage ('Generate jar ') {
+
+          steps {
+
+          sh 'mvn package -DskipTests'
+
+          }
         stage ('SonarQube analysis') {
             steps{
              withSonarQubeEnv('SonarQube') {
