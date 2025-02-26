@@ -46,6 +46,7 @@ pipeline {
           sh 'mvn package -DskipTests'
 
           }
+          }
         stage ('SonarQube analysis') {
             steps{
              withSonarQubeEnv('SonarQube') {
