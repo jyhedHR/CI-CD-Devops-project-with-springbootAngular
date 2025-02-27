@@ -3,6 +3,9 @@ pipeline {
     agent any
     tools {
         maven 'M2_HOME'
+        DOCKER_IMAGE = "skierDevops"
+        DOCKER_TAG = "latest"
+
     }
 
     stages {
@@ -48,8 +51,10 @@ stage('Build Docker Image') {
         stage('Push Docker Image') {
             steps {
             withCredentials([string(credentialsId: 'DockerHub', variable: 'DOCKER_ACCESS_TOKEN')]) {
-                sh 'echo $DOCKER_ACCESS_TOKEN | docker login -u yasmine bouteraa--password-stdin'
+                sh 'echo $DOCKER_ACCESS_TOKEN | docker login -u yasminebouteraa--password-stdin'
+                 sh 'docker tag yasminebouteraa:latest yasminebouteraa/$DOCKER_IMAGE:$DOCKER_TAG'
             sh 'docker push $DOCKER_IMAGE:$DOCKER_TAG'
+
             }
             }
         }
