@@ -48,11 +48,11 @@ pipeline {
                 }
             }
         }
-        stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t $DOCKER_IMAGE:$DOCKER_TAG .'
-            }
-        }
+       stage('Build Docker Image') {
+    steps {
+        sh 'sudo docker build -t $DOCKER_IMAGE:$DOCKER_TAG .'
+    }
+}
         stage('Push Docker Image') {
             steps {
             withCredentials([string(credentialsId: 'DockerHub', variable: 'DOCKER_ACCESS_TOKEN')]) {
