@@ -22,7 +22,7 @@ pipeline {
             steps {
                 git branch: 'Yasmine_bouteraa_4TWIN5',
                     url: 'https://github.com/jyhedHR/4twin5_Group2_gestion-station-skier.git',
-                    credentialsId: 'Git'
+                    credentialsId: 'git'
             }
         }
 
