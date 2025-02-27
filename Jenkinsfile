@@ -48,6 +48,12 @@ pipeline {
 
           }
           }
+          stage('Deploy to Nexus') {
+              steps {
+                  sh "mvn deploy -DskipTests"
+              }
+          }
+
         stage ('SonarQube analysis') {
             steps{
              withSonarQubeEnv('SonarQube') {
