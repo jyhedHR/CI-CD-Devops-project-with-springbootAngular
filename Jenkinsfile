@@ -58,7 +58,7 @@ stage('Build Docker Image') {
         }
         stage('Push Docker Image') {
             steps {
-            withCredentials([string(credentialsId: 'DockerHub', variable: 'DOCKER_ACCESS_TOKEN')]) {
+            withCredentials([string(credentialsId: 'DokherHub', variable: 'DOCKER_ACCESS_TOKEN')]) {
                 sh 'echo $DOCKER_ACCESS_TOKEN | docker login -u yasminebouteraa --password-stdin'
                  sh 'docker tag yasminebouteraa:latest yasminebouteraa/$DOCKER_IMAGE:$DOCKER_TAG'
                  sh 'docker push $DOCKER_IMAGE:$DOCKER_TAG'
