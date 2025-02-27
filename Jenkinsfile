@@ -56,10 +56,10 @@ pipeline {
             sh 'echo $DockerHub | sudo docker login -u jyhedhr --password-stdin'
             
             // Tag the image for pushing to Docker Hub
-            sh "sudo docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} jyhedhr/${DOCKER_IMAGE}:${DOCKER_TAG}"
+            sh "sudo docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:${DOCKER_TAG}"
             
             // Push the tagged image to Docker Hub
-            sh "sudo docker push jyhedhr/${DOCKER_IMAGE}:${DOCKER_TAG}"
+            sh "sudo docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
         }
     }
         }
