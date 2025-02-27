@@ -56,22 +56,17 @@ stage('Build Docker Image') {
                 sh 'docker build -t $DOCKER_IMAGE:$DOCKER_TAG .'
             }
         }
-       stage('Push Docker Image') {
-           steps {
-               // Utilisez le nom d'identifiant exact de vos credentials DockerHub
-               withCredentials([string(credentialsId: 'DockerHub', variable: 'DOCKER_ACCESS_TOKEN')]) {
-                   // Connexion à Docker Hub
-                   sh 'echo $DOCKER_ACCESS_TOKEN | docker login -u yasminebouteraa --password-stdin'
+        stage('Push Docker Image') {
+            steps {
+            withCredentials([string(credentialsId: 'DockerHub', variable: 'DOCKER_ACCESS_TOKEN')]) {
+                sh 'echo $DOCKER_ACCESS_TOKEN | docker login -u yasminebouteraa --password-stdin'
+                 sh 'docker tag yasminebouteraa:latest yasminebouteraa/$DOCKER_IMAGE:$DOCKER_TAG'
+                 sh 'docker push $DOCKER_IMAGE:$DOCKER_TAG'
 
-                   // Taguer l'image Docker
-                   sh 'docker tag $DOCKER_IMAGE:$DOCKER_TAG yasminebouteraa/$DOCKER_IMAGE:$DOCKER_TAG'
 
-                   // Pousser l'image vers Docker Hub
-                   sh 'docker push yasminebouteraa/$DOCKER_IMAGE:$DOCKER_TAG'
-               }
-           }
-       }
-
+            }
+            }
+        }
         stage('Deploy Container') {
                     steps {
                         sh 'docker stop skiReg || true'
