@@ -8,8 +8,11 @@ pipeline {
          PATH = "$M2_HOME/bin:$PATH"
          DOCKER_IMAGE = "skierDevops"
          DOCKER_TAG = "latest"
-         registryCredentials = "nexus"
-         registry = "172.25.251.16:8080"
+          NEXUS_VERSION = "nexus3"
+                 NEXUS_PROTOCOL = "http"
+                 NEXUS_URL = "172.25.251.16:8080"
+                 NEXUS_REPOSITORY = "maven-central-repository"
+                 NEXUS_CREDENTIAL_ID = "nexus"
 
 
      }
@@ -50,16 +53,41 @@ pipeline {
 
           }
           }
-         stage('Deploy  to Nexus') {
-         steps{
-         script {
-         docker.withRegistry("http://"+registry,
-         registryCredentials ) {
-         sh('docker push $registry/gestion-station-ski:1.0')
-         }
-         }
-         }
-         }
+          stage("Publish to Nexus Repository Manager") {
+                     steps {
+                         script {
+                             pom = readMavenPom file: "pom.xml";
+                             filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
+                             echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
+                             artifactPath = filesByGlob[0].path;
+                             artifactExists = fileExists artifactPath;
+                             if(artifactExists) {
+                                 echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
+                                 nexusArtifactUploader(
+                                     nexusVersion: NEXUS_VERSION,
+                                     protocol: NEXUS_PROTOCOL,
+                                     nexusUrl: NEXUS_URL,
+                                     groupId: pom.groupId,
+                                     version: pom.version,
+                                     repository: NEXUS_REPOSITORY,
+                                     credentialsId: NEXUS_CREDENTIAL_ID,
+                                     artifacts: [
+                                         [artifactId: pom.artifactId,
+                                         classifier: '',
+                                         file: artifactPath,
+                                         type: pom.packaging],
+                                         [artifactId: pom.artifactId,
+                                         classifier: '',
+                                         file: "pom.xml",
+                                         type: "pom"]
+                                     ]
+                                 );
+                             } else {
+                                 error "*** File: ${artifactPath}, could not be found";
+                             }
+                         }
+                     }
+                     }
 
         stage ('SonarQube analysis') {
             steps{
