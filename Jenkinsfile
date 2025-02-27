@@ -44,11 +44,11 @@ pipeline {
         }
 
         stage('Build Docker Image') {
-            stage('Clean compile') {
+            
     steps {
         sh 'mvn clean package -DskipTests'  // Ensure the JAR is created
     }
-}
+
             steps {
                 sh 'sudo docker build -t gestion-station-ski-1.0 .'  // Removed sudo
             }
