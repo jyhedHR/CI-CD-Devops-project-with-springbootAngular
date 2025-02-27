@@ -33,6 +33,16 @@ pipeline {
             }
         }
 
+        stage ('Generate jar ') {
+
+                  steps {
+
+                  sh 'mvn package -DskipTests'
+
+                  }
+                  }
+
+
 
         stage(' test Projet') {
             steps {
