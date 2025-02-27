@@ -35,17 +35,29 @@ pipeline {
             }
         }
 
-       stage('Maven SonarQube Analysis') {
-           steps {
-               withSonarQubeEnv('SonarQube') {
-                   sh 'mvn sonar:sonar'
-               }
-           }
-       }
-       stage('Maven Package JAR') {
-           steps {
-               sh 'mvn clean package -DskipTests'
-           }
-       }
+        stage('Maven SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh 'mvn sonar:sonar'
+                }
+            }
+        }
+        stage('Maven Package JAR') {
+            steps {
+                sh 'mvn clean package -DskipTests'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t gestion-station-ski-instructor .'
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                sh 'docker run -d -p 8089:8089 --name gestion-station-ski-instructor gestion-station-ski-instructor'
+            }
+        }
     }
 }
