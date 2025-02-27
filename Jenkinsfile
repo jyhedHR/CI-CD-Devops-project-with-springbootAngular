@@ -53,17 +53,17 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'DockerHub', variable: 'DOCKER_ACCESS_TOKEN')]) {
                     sh 'echo $DOCKER_ACCESS_TOKEN | docker login -u jyhedhr --password-stdin'
-                    sh 'docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:${DOCKER_TAG}'
-                    sh 'docker push ${DOCKER_IMAGE}:${DOCKER_TAG}'
+                    sh 'sudo docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:${DOCKER_TAG}'
+                    sh 'sudo docker push ${DOCKER_IMAGE}:${DOCKER_TAG}'
                 }
             }
         }
 
         stage('Deploy Container') {
             steps {
-                sh 'docker stop skiReg || true'
-                sh 'docker rm skiReg || true'
-                sh 'docker run -d --name skiReg -p 8089:8089 ${DOCKER_IMAGE}:${DOCKER_TAG}'
+                sh 'sudo docker stop skiReg || true'
+                sh 'sudo docker rm skiReg || true'
+                sh 'sudo docker run -d --name skiReg -p 8089:8089 ${DOCKER_IMAGE}:${DOCKER_TAG}'
             }
         }
 
