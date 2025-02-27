@@ -48,6 +48,16 @@ pipeline {
                 sh 'sudo docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .'  // Removed sudo
             }
         }
+          stage('Push Docker Image') {
+            steps {
+                script {
+                    // Login to Docker Hub
+                    docker.withRegistry('https://index.docker.io/v1/', "${DockerHub}") {
+                        sh 'sudo docker push ${DOCKER_IMAGE}:${DOCKER_TAG}'
+                    }
+                }
+            }
+        }
       stage('Run Docker Container') {
             steps {
                script {
