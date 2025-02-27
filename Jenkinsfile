@@ -22,7 +22,8 @@ pipeline {
         stage('GIT Checkout') {
             steps {
                 script {
-                    git branch: 'Elyess_BenSassi_4TWIN5_Group2', 
+                    git branch: 'Elyess_BenSassi_4TWIN5_Group2',
+                    credentialsId: 'PAT_jenkins',
                     url: 'https://github.com/jyhedHR/4twin5_Group2_gestion-station-skier.git'
                 }
             }
