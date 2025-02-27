@@ -11,15 +11,7 @@ pipeline {
     }
 
     stages {
-        stage('Verify Git Installation') {
-                steps {
-                    script {
-                        sh 'which git'  // Check Git path
-                        sh 'git --version'  // Display Git version
-                    }
-                }
-         }
-        stage('GIT Checkout') {
+        stage('GIT') {
             steps {
                 script {
                     git branch: 'Elyess_BenSassi_4TWIN5_Group2',
@@ -43,11 +35,16 @@ pipeline {
             }
         }
 
-       stage('SonarQube Analysis') {
+       stage('Maven SonarQube Analysis') {
            steps {
                withSonarQubeEnv('SonarQube') {
                    sh 'mvn sonar:sonar'
                }
+           }
+       }
+       stage('Maven Package JAR') {
+           steps {
+               sh 'mvn clean package -DskipTests'
            }
        }
     }
