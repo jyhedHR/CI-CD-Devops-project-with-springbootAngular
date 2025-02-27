@@ -2,9 +2,10 @@
 pipeline {
     agent any
     environment {
-            DOCKER_IMAGE = "skierDevops"
-            DOCKER_TAG = "latest"
-        }
+        DOCKER_IMAGE = "skierdevops"  // Nom en minuscules
+        DOCKER_TAG = "latest"
+    }
+
     tools {
         maven 'M2_HOME'
 
