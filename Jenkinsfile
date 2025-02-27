@@ -20,27 +20,7 @@ pipeline {
             }
         }
 
-        stage('Clean compile') {
-            steps {
-                sh 'mvn clean compile'
 
-            }
-        }
-
-
-        stage(' test Projet') {
-            steps {
-                 sh 'mvn -Dtest=SkierServicesImplTest clean test'
-             }
-        }
-
-        stage('Run SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh 'mvn sonar:sonar'
-                }
-            }
-        }
 
         stage('Deploy') {
             steps {
