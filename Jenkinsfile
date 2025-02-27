@@ -6,7 +6,7 @@ pipeline {
          JAVA_HOME = "/usr/lib/jvm/java-17-openjdk-amd64/"
          M2_HOME = "/opt/apache-maven-3.6.3"
          PATH = "$M2_HOME/bin:$PATH"
-         DOCKER_IMAGE = "skierDevops"
+         DOCKER_IMAGE = "skierdevops"
          DOCKER_TAG = "latest"
 
 
