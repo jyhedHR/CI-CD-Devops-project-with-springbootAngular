@@ -1,16 +1,12 @@
-
 pipeline {
     agent any
     tools {
         maven 'M2_HOME'
     }
-     environment {
-        
-         DOCKER_IMAGE = "jyhedhr"
-         DOCKER_TAG = "latest"
-
-
-     }
+    environment {
+        DOCKER_IMAGE = "jyhedhr"
+        DOCKER_TAG = "latest"
+    }
 
     stages {
         stage('Hello Test') {
@@ -30,15 +26,13 @@ pipeline {
         stage('Clean compile') {
             steps {
                 sh 'mvn clean compile'
-
             }
         }
 
-
-        stage(' test Projet') {
+        stage('Test Project') {
             steps {
-                 sh 'mvn -Dtest=SkierServicesImplTest clean test'
-             }
+                sh 'mvn -Dtest=SkierServicesImplTest clean test'
+            }
         }
 
         stage('Run SonarQube Analysis') {
@@ -48,31 +42,34 @@ pipeline {
                 }
             }
         }
-       stage('Build Docker Image') {
-    steps {
-        sh 'sudo docker build -t gestion-station-ski-1.0 .'
-    }
-}
-        stage('Push Docker Image') {
+
+        stage('Build Docker Image') {
             steps {
-            withCredentials([string(credentialsId: 'DockerHub', variable: 'DOCKER_ACCESS_TOKEN')]) {
-                sh 'echo $DOCKER_ACCESS_TOKEN | docker login -u jyhedhr --password-stdin'
-            sh 'docker tag jyhedhr:latest jyhedhr/jyhedhr:latest'
-                sh 'docker push jyhedhr/jyhedhr:latest'
-            }
+                sh 'docker build -t gestion-station-ski-1.0 .'  // Removed sudo
             }
         }
-        stage('Deploy Container') {
-                    steps {
-                        sh 'docker stop skiReg || true'
-                        sh 'docker rm skiReg || true'
-                        sh 'docker run -d --name skiReg -p 8089:8089 $DOCKER_IMAGE:$DOCKER_TAG'
-                    }
+
+        stage('Push Docker Image') {
+            steps {
+                withCredentials([string(credentialsId: 'DockerHub', variable: 'DOCKER_ACCESS_TOKEN')]) {
+                    sh 'echo $DOCKER_ACCESS_TOKEN | docker login -u jyhedhr --password-stdin'
+                    sh 'docker tag gestion-station-ski-1.0 jyhedhr/jyhedhr:latest'
+                    sh 'docker push jyhedhr/jyhedhr:latest'
                 }
+            }
+        }
+
+        stage('Deploy Container') {
+            steps {
+                sh 'docker stop skiReg || true'
+                sh 'docker rm skiReg || true'
+                sh 'docker run -d --name skiReg -p 8089:8089 jyhedhr/jyhedhr:latest'
+            }
+        }
 
         stage('Deploy') {
             steps {
-                sh 'mvn deploy -DskipTests '
+                sh 'mvn deploy -DskipTests'
             }
         }
     }
