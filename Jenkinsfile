@@ -45,7 +45,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t gestion-station-ski-1.0 .'  // Removed sudo
+                sh 'sudo docker build -t gestion-station-ski-1.0 .'  // Removed sudo
             }
         }
 
