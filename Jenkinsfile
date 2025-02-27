@@ -54,16 +54,6 @@ pipeline {
             }
         }
 
-   
-
-        stage('Deploy Container') {
-            steps {
-                sh 'sudo docker stop skiReg || true'
-                sh 'sudo docker rm skiReg || true'
-                sh 'sudo docker run -d --name skiReg -p 8089:8089 ${DOCKER_IMAGE}:${DOCKER_TAG}'
-            }
-        }
-
         stage('Deploy') {
             steps {
                 sh 'mvn deploy -DskipTests'
