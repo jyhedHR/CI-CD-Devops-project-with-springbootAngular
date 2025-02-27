@@ -11,6 +11,14 @@ pipeline {
     }
 
     stages {
+        stage('Verify Git Installation') {
+                steps {
+                    script {
+                        sh 'which git'  // Check Git path
+                        sh 'git --version'  // Display Git version
+                    }
+                }
+         }
         stage('GIT Checkout') {
             steps {
                 script {
