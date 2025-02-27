@@ -8,6 +8,8 @@ pipeline {
          PATH = "$M2_HOME/bin:$PATH"
          DOCKER_IMAGE = "skierDevops"
          DOCKER_TAG = "latest"
+         registryCredentials = "nexus"
+         registry = "172.25.251.16:8080"
 
 
      }
@@ -48,11 +50,16 @@ pipeline {
 
           }
           }
-          stage('Deploy to Nexus') {
-              steps {
-                  sh "mvn deploy -DskipTests"
-              }
-          }
+         stage('Deploy  to Nexus') {
+         steps{
+         script {
+         docker.withRegistry("http://"+registry,
+         registryCredentials ) {
+         sh('docker push $registry/gestion-station-ski:1.0')
+         }
+         }
+         }
+         }
 
         stage ('SonarQube analysis') {
             steps{
