@@ -49,14 +49,19 @@ pipeline {
             }
         }
           stage('Push Docker Image') {
-            steps {
-                script {
-                    // Login to Docker Hub
-                    docker.withRegistry('https://index.docker.io/v1/', "${DockerHub}") {
-                        sh 'sudo docker push ${DOCKER_IMAGE}:${DOCKER_TAG}'
-                    }
-                }
-            }
+               steps {
+        // Use the credentials stored in Jenkins
+        withCredentials([string(credentialsId: 'DockerHub', variable: 'DockerHub')]) {
+            // Log in to Docker Hub using the access token
+            sh 'echo $DockerHub | sudo docker login -u jyhedhr --password-stdin'
+            
+            // Tag the image for pushing to Docker Hub
+            sh "sudo docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} jyhedhr/${DOCKER_IMAGE}:${DOCKER_TAG}"
+            
+            // Push the tagged image to Docker Hub
+            sh "sudo docker push jyhedhr/${DOCKER_IMAGE}:${DOCKER_TAG}"
+        }
+    }
         }
       stage('Run Docker Container') {
             steps {
