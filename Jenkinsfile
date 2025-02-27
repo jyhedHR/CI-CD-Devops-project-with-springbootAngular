@@ -48,15 +48,13 @@ pipeline {
                 sh 'sudo docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .'  // Removed sudo
             }
         }
-
-      stage('Push Docker Image') {
-    steps {
-        withCredentials([string(credentialsId: 'DockerHub', variable: 'DOCKER_ACCESS_TOKEN')]) {
-            sh 'echo $DOCKER_ACCESS_TOKEN | docker login -u jyhedhr --password-stdin'
-            sh 'sudo docker push ${DOCKER_IMAGE}:${DOCKER_TAG}'
+       stage('Run Docker Container') {
+            steps {
+                sh 'sudo docker run -d -p 8089:8089 --name gestion-station-ski ${DOCKER_IMAGE}:${DOCKER_TAG}'
+            }
         }
-    }
-}
+
+   
 
         stage('Deploy Container') {
             steps {
