@@ -4,7 +4,7 @@ pipeline {
         maven 'M2_HOME'
     }
     environment {
-        DOCKER_IMAGE = "jyhedhr"
+        DOCKER_IMAGE = "jyhedhr/gestion-station-ski"
         DOCKER_TAG = "latest"
     }
 
@@ -25,13 +25,13 @@ pipeline {
 
         stage('Clean compile') {
             steps {
-                sh 'mvn clean compile'
+                sh 'mvn clean package -DskipTests'  // Ensure JAR is built
             }
         }
 
         stage('Test Project') {
             steps {
-                sh 'mvn -Dtest=SkierServicesImplTest clean test'
+                sh 'mvn -Dtest=SkierServicesImplTest test'
             }
         }
 
@@ -44,13 +44,8 @@ pipeline {
         }
 
         stage('Build Docker Image') {
-            
-    steps {
-        sh 'mvn clean package -DskipTests'  // Ensure the JAR is created
-    }
-
             steps {
-                sh 'sudo docker build -t gestion-station-ski-1.0 .'  // Removed sudo
+                sh 'docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .'  // Removed sudo
             }
         }
 
@@ -58,8 +53,8 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'DockerHub', variable: 'DOCKER_ACCESS_TOKEN')]) {
                     sh 'echo $DOCKER_ACCESS_TOKEN | docker login -u jyhedhr --password-stdin'
-                    sh 'docker tag gestion-station-ski-1.0 jyhedhr/jyhedhr:latest'
-                    sh 'docker push jyhedhr/jyhedhr:latest'
+                    sh 'docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:${DOCKER_TAG}'
+                    sh 'docker push ${DOCKER_IMAGE}:${DOCKER_TAG}'
                 }
             }
         }
@@ -68,7 +63,7 @@ pipeline {
             steps {
                 sh 'docker stop skiReg || true'
                 sh 'docker rm skiReg || true'
-                sh 'docker run -d --name skiReg -p 8089:8089 jyhedhr/jyhedhr:latest'
+                sh 'docker run -d --name skiReg -p 8089:8089 ${DOCKER_IMAGE}:${DOCKER_TAG}'
             }
         }
 
