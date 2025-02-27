@@ -50,15 +50,15 @@ pipeline {
         }
        stage('Build Docker Image') {
     steps {
-        sh 'sudo docker build -t $DOCKER_IMAGE:$DOCKER_TAG .'
+        sh 'sudo docker build -t gestion-station-ski-1.0 .'
     }
 }
         stage('Push Docker Image') {
             steps {
             withCredentials([string(credentialsId: 'DockerHub', variable: 'DOCKER_ACCESS_TOKEN')]) {
                 sh 'echo $DOCKER_ACCESS_TOKEN | docker login -u jyhedhr --password-stdin'
-            sh 'docker tag jyhedhr:latest jyhedhr/$DOCKER_IMAGE:$DOCKER_TAG'
-                sh 'docker push jyhedhr/$DOCKER_IMAGE:$DOCKER_TAG'
+            sh 'docker tag jyhedhr:latest jyhedhr/jyhedhr:latest'
+                sh 'docker push jyhedhr/jyhedhr:latest'
             }
             }
         }
