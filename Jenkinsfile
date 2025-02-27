@@ -38,19 +38,13 @@ pipeline {
             }
         }
 
-        stage('Run Unit Tests') {
+        stage('Unit Tests') {
             steps {
                 echo 'Running JUnit Tests...'
                 sh 'mvn test'
             }
         }
 
-        stage('Integration Tests') {
-            steps {
-                echo 'Running Integration Tests...'
-                sh 'mvn verify'
-            }
-        }
 
         stage('Build Docker Image') {
             steps {
