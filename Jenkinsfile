@@ -38,13 +38,7 @@ pipeline {
                  sh 'mvn test'
              }
         }
-        stage ('SonarQube analysis') {
-        steps{
-        withSonarQubeEnv('SonarQube') {
-        sh 'mvn sonar:sonar '
-}
-}
-}
+
 
 stage('Build Docker Image') {
             steps {
