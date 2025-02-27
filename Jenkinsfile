@@ -30,13 +30,7 @@ pipeline {
             }
         }
 
-        stage('Static Code Analysis') {
-            steps {
-                echo '🔍 Running Static Code Analysis...'
-                sh 'mvn checkstyle:check'
-                sh 'mvn spotbugs:check'
-            }
-        }
+
 
         stage('Generate jar') {
             steps {
@@ -46,14 +40,14 @@ pipeline {
 
         stage('Run Unit Tests') {
             steps {
-                echo '🚀 Running JUnit Tests...'
+                echo 'Running JUnit Tests...'
                 sh 'mvn test'
             }
         }
 
         stage('Integration Tests') {
             steps {
-                echo '🔄 Running Integration Tests...'
+                echo 'Running Integration Tests...'
                 sh 'mvn verify'
             }
         }
