@@ -35,7 +35,7 @@ pipeline {
 
         stage(' test Projet') {
             steps {
-                 sh 'mvn =test'
+                 sh 'mvn test'
              }
         }
         stage ('SonarQube analysis') {
