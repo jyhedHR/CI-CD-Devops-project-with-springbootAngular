@@ -1,5 +1,12 @@
 pipeline {
     agent any
+ environment {
+         DOCKER_IMAGE = "gestion-skier"
+         DOCKER_TAG = "latest"
+
+
+     }
+
     tools {
         maven 'M2_HOME'
     }
@@ -15,7 +22,7 @@ pipeline {
             steps {
                 git branch: 'Jihed_Lourassi_4TWIN5',
                     url: 'https://github.com/jyhedHR/4twin5_Group2_gestion-station-skier.git',
-                    credentialsId: 'Gitttt'
+                    credentialsId: 'Git'
             }
         }
 
@@ -32,6 +39,15 @@ pipeline {
              }
         }
 
+  stage ('Generate jar ') {
+
+          steps {
+
+          sh 'mvn package -DskipTests'
+
+          }
+          }
+
         stage('SonarQube') {
             steps {
                 withSonarQubeEnv('SonarQube') {
@@ -39,5 +55,14 @@ pipeline {
                 }
             }
         }
-    }
+
+      stage('Deploy') {
+                  steps {
+                      sh 'mvn deploy -DskipTests'
+                  }
+              }
+
+}
+
+
 }
