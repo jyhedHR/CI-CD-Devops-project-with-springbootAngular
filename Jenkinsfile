@@ -6,10 +6,6 @@ pipeline {
          JAVA_HOME = "/usr/lib/jvm/java-17-openjdk-amd64/"
          M2_HOME = "/opt/apache-maven-3.6.3"
          PATH = "$M2_HOME/bin:$PATH"
-         DOCKER_IMAGE = "eyanehdi"
-         DOCKER_TAG = "latest"
-
-
      }
 
  stages {
@@ -56,27 +52,12 @@ pipeline {
         }
     }
 }
-stage('Build Docker Image') {
+stage('Nexus') {
             steps {
-                sh 'docker build -t $DOCKER_IMAGE:$DOCKER_TAG .'
+                sh 'mvn deploy -DskipTests'
             }
         }
-        stage('Push Docker Image') {
-            steps {
-            withCredentials([string(credentialsId: 'DockerHub', variable: 'DOCKER_ACCESS_TOKEN')]) {
-                sh 'echo $DOCKER_ACCESS_TOKEN | docker login -u eyanehdi --password-stdin'
-            sh 'docker tag eyanehdi:latest eyanehdi/$DOCKER_IMAGE:$DOCKER_TAG'
-                sh 'docker push eyanehdi/$DOCKER_IMAGE:$DOCKER_TAG'
-            }
-            }
-        }
-        stage('Deploy Container') {
-                    steps {
-                        sh 'docker stop skiReg || true'
-                        sh 'docker rm skiReg || true'
-                        sh 'docker run -d --name skiReg -p 8089:8089 $DOCKER_IMAGE:$DOCKER_TAG'
-                    }
-                }
+
 
 }
 
