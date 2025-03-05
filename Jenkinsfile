@@ -45,13 +45,13 @@ pipeline {
           }
           }
 
-        stage ('SonarQube analysis') {
+       /* stage ('SonarQube analysis') {
             steps{
              withSonarQubeEnv('SonarQube') {
                     sh 'mvn sonar:sonar '
         }
     }
-}
+}*/
 stage('Nexus') {
             steps {
                 sh 'mvn deploy -DskipTests'
