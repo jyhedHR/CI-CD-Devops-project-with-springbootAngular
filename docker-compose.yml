@@ -1,0 +1,13 @@
+version: "2.32.4"
+services:
+  mysqldb:
+    image: mysql:5.7
+    container_name: mysqldb
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_DATABASE=jobs
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    ports:
+        - 3306:3306
+    volumes:
+      - ./mysql:/var/lib/mysql

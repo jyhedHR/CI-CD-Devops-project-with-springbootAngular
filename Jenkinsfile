@@ -36,15 +36,6 @@ pipeline {
                  sh 'mvn -X test'
              }
       }
-      stage ('Generate jar ') {
-
-          steps {
-
-          sh 'mvn package -DskipTests'
-
-          }
-          }
-
 
 stage('Nexus') {
             steps {
