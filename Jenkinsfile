@@ -42,6 +42,11 @@ stage('Nexus') {
                 sh 'mvn deploy -DskipTests'
             }
         }
+        stage('Docker Compose Up') {
+                    steps {
+                        sh 'docker-compose up -d'
+                    }
+                }
 
 
 }
