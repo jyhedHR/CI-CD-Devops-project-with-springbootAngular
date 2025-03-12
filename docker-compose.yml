@@ -15,7 +15,7 @@ services:
 
 
   gestionski:
-    image: gestion-station-ski:1.0
+    image: jyhedhr/gestion-station-ski:latest
     ports:
       - 8089:8089
     restart: unless-stopped
