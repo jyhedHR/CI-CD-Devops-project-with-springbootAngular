@@ -18,8 +18,8 @@ public interface ISubscriptionRepository extends CrudRepository<Subscription, Lo
 
     List<Subscription> getSubscriptionsByStartDateBetween(LocalDate date1, LocalDate date2);
 
-    @Query("select distinct s from Subscription s where s.endDate <= CURRENT_TIME order by s.endDate")
-    List<Subscription> findDistinctOrderByEndDateAsc();
+  //  @Query("select distinct s from Subscription s where s.endDate <= CURRENT_TIME order by s.endDate")
+   // List<Subscription> findDistinctOrderByEndDateAsc();
 
 
     //@Query("select (sum(s.price))/(count(s)) from Subscription s where s.typeSub = ?1")
