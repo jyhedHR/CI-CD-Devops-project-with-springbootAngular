@@ -11,8 +11,7 @@ services:
     volumes:
       - ./mysql:/var/lib/mysql
     restart: unless-stopped
-    networks:
-      - mynetwork
+    network_mode: host
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "mysqldb" ]
       interval: 10s
