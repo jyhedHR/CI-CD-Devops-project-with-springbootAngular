@@ -29,7 +29,8 @@ services:
     volumes:
       - ./logs:/logs
     depends_on:
-      - mysqldb
+       mysqldb:
+          condition: service_healthy
     networks:
       - mynetwork
 networks:
