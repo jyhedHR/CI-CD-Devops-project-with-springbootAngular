@@ -28,8 +28,3 @@ services:
       - ./logs:/logs
     links:
       - mysqldb
-    networks:
-      - mynetwork
-networks:
-  mynetwork:
-    driver: host
