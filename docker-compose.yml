@@ -14,7 +14,7 @@ services:
     networks:
       - mynetwork
     healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "mysqldb" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -27,11 +27,10 @@ services:
     restart: unless-stopped
     volumes:
       - ./logs:/logs
-    depends_on:
-       mysqldb:
-          condition: service_healthy
+    links:
+      - mysqldb
     networks:
       - mynetwork
 networks:
   mynetwork:
-    driver: bridge
+    driver: host
