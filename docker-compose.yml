@@ -12,6 +12,8 @@ services:
     volumes:
       - ./mysql:/var/lib/mysql
     restart: unless-stopped
+    networks:
+      - mynetwork
 
 
   gestionski:
@@ -23,3 +25,8 @@ services:
       - ./logs:/logs
     depends_on:
       - mysqldb
+    networks:
+      - mynetwork
+networks:
+  mynetwork:
+    driver: bridge
