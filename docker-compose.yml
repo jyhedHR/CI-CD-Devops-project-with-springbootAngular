@@ -1,23 +1,24 @@
 version: "2.32.4"
 services:
   mysqldb:
-    image: mysql:5.7
+    image: "mysql:5.7"
     environment:
       - MYSQL_ROOT_PASSWORD=
       - MYSQL_DATABASE=stationSki
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     ports:
-        - 3306:3306
+        - "3306:3306"
     volumes:
       - ./mysql:/var/lib/mysql
-    restart: unless-stopped
 
   gestionski:
-    image: gestion-station-ski:1.0
+    image: "gestion-station-ski:1.0"
     ports:
-      - 8089:8089
+      - "8089:8089"
     restart: unless-stopped
     volumes:
       - ./logs:/logs
-    links:
+    environment:
+      - "spring.datasource.url=jdbc:mysql://mysqldb:3306/stationSki?createDatabaseIfNotExist=true&userSSL=false&max_allowed_packet=15728640"
+    depends_on:
       - mysqldb
