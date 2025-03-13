@@ -11,13 +11,6 @@ services:
     volumes:
       - ./mysql:/var/lib/mysql
     restart: unless-stopped
-    network_mode: host
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "mysqldb" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
 
   gestionski:
     image: gestion-station-ski:1.0
