@@ -36,6 +36,11 @@ pipeline {
                  sh 'mvn -X test'
              }
       }
+      stage('Jacoco Report') {
+                   steps {
+                       sh 'mvn jacoco:report'
+                   }
+            }
 
 stage('Nexus') {
             steps {
