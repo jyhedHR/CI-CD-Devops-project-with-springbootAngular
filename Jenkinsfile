@@ -50,7 +50,6 @@ stage('Nexus') {
             steps {
                 sh 'mvn deploy -DskipTests'
             }
-
         }
 
         stage('Build Docker Image') {
