@@ -15,35 +15,6 @@ pipeline {
                     url: 'git@github.com:jyhedHR/4twin5_Group2_gestion-station-skier.git'
             }
         }
-
-        // 👇 Nouvelle étape pour créer le fichier prometheus.yml
-        stage('Préparer prometheus.yml') {
-            steps {
-                sh '''
-                # Changer les permissions avant de supprimer
-                chmod -R 777 prometheus
-                rm -rf prometheus/prometheus.yml
-                mkdir -p prometheus
-                cat <<EOF > prometheus/prometheus.yml
-        global:
-          scrape_interval: 15s
-
-        scrape_configs:
-          - job_name: 'gestionski'
-            metrics_path: '/actuator/prometheus'
-            static_configs:
-              - targets: ['gestionski:8089']
-
-          - job_name: 'jenkins'
-            metrics_path: '/prometheus'
-            static_configs:
-              - targets: ['172.25.251.16:8080']
-        EOF
-                '''
-            }
-        }
-
-
         stage('Compile Stage') {
             steps {
                 sh 'mvn clean compile'
