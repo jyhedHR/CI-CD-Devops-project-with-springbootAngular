@@ -1,78 +1,93 @@
 pipeline {
+    agent any
 
- agent any
-
- environment {
-         JAVA_HOME = "/usr/lib/jvm/java-17-openjdk-amd64/"
-         M2_HOME = "/opt/apache-maven-3.6.3"
-         PATH = "$M2_HOME/bin:$PATH"
-     }
-
- stages {
-
- stage('GIT') {
-
-           steps {
-
-               git branch: 'NehdiEya_4TWIN5_Groupe2',
-
-               url: 'git@github.com:jyhedHR/4twin5_Group2_gestion-station-skier.git'
-
-          }
-
-     }
-
- stage ('Compile Stage') {
-
-    steps {
-
-    sh 'mvn clean compile'
-
+    environment {
+        JAVA_HOME = "/usr/lib/jvm/java-17-openjdk-amd64/"
+        M2_HOME = "/opt/apache-maven-3.6.3"
+        PATH = "$M2_HOME/bin:$PATH"
     }
 
- }
-    stage('Test Stage') {
-             steps {
-                 sh 'mvn -X test'
-             }
-      }
-      stage('Jacoco Report') {
-                   steps {
-                       sh 'mvn jacoco:report'
-                   }
-            }
+    stages {
 
-stage('Nexus') {
+        stage('GIT') {
+            steps {
+                git branch: 'NehdiEya_4TWIN5_Groupe2',
+                    url: 'git@github.com:jyhedHR/4twin5_Group2_gestion-station-skier.git'
+            }
+        }
+
+        // 👇 Nouvelle étape pour créer le fichier prometheus.yml
+        stage('Préparer prometheus.yml') {
+            steps {
+                sh '''
+                mkdir -p prometheus
+                cat <<EOF > prometheus/prometheus.yml
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'gestionski'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['gestionski:8089']
+
+  - job_name: 'jenkins'
+    metrics_path: '/prometheus'
+    static_configs:
+      - targets: ['172.25.251.16:8080']
+EOF
+                '''
+            }
+        }
+
+        stage('Compile Stage') {
+            steps {
+                sh 'mvn clean compile'
+            }
+        }
+
+        stage('Test Stage') {
+            steps {
+                sh 'mvn -X test'
+            }
+        }
+
+        stage('Jacoco Report') {
+            steps {
+                sh 'mvn jacoco:report'
+            }
+        }
+
+        stage('Nexus') {
             steps {
                 sh 'mvn deploy -DskipTests'
             }
         }
+
         stage('Build Docker Image') {
-                    steps {
-                        script {
-                            def imageExists = sh(script: "docker images -q gestion-station-ski:1.0", returnStdout: true).trim()
-                            if (!imageExists) {
-                                echo "Image not found, building..."
-                                sh "docker build -t gestion-station-ski:1.0 ."
-                            } else {
-                                echo "Image already exists, skipping build."
-                            }
-                        }
+            steps {
+                script {
+                    def imageExists = sh(script: "docker images -q gestion-station-ski:1.0", returnStdout: true).trim()
+                    if (!imageExists) {
+                        echo "Image not found, building..."
+                        sh "docker build -t gestion-station-ski:1.0 ."
+                    } else {
+                        echo "Image already exists, skipping build."
                     }
                 }
-                 stage('Docker Compose build') {
-                                    steps {
-                                        sh 'docker compose build'
-                                    }
-                                }
+            }
+        }
+
+        stage('Docker Compose build') {
+            steps {
+                sh 'docker compose build'
+            }
+        }
+
         stage('Docker Compose Up') {
-                    steps {
-                        sh 'docker compose up -d'
-                    }
-                }
-
-
-}
-
-
+            steps {
+                sh 'docker compose up -d'
+            }
+        }
+    }
 }
