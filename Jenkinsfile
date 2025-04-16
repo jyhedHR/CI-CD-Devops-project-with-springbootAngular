@@ -20,6 +20,8 @@ pipeline {
         stage('Préparer prometheus.yml') {
             steps {
                 sh '''
+                # Supprimer si le fichier ou dossier existe
+                rm -rf prometheus/prometheus.yml
                 mkdir -p prometheus
                 cat <<EOF > prometheus/prometheus.yml
 global:
