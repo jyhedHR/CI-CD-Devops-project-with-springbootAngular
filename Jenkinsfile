@@ -19,7 +19,7 @@ pipeline {
             steps {
                 git branch: 'Jihed_Horchani_4twin5',
                     url: 'https://github.com/jyhedHR/4twin5_Group2_gestion-station-skier.git',
-                    credentialsId: 'Gitttt'
+                    credentialsId: 'gitDev'
             }
         }
 
