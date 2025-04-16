@@ -21,3 +21,12 @@ services:
       - "spring.datasource.url=jdbc:mysql://mysqldb:3306/stationSki?createDatabaseIfNotExist=true&userSSL=false&max_allowed_packet=15728640"
     depends_on:
       - mysqldb
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - gestionski
