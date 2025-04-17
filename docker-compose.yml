@@ -2,7 +2,7 @@ version: "2.32.4"
 services:
   mysqldb:
     image: mysql:5.7
-    container_name: mysqldb
+    container_name: mysqldbb
     environment:
       - MYSQL_ROOT_PASSWORD=
       - MYSQL_DATABASE=stationSki
@@ -21,4 +21,4 @@ services:
     volumes:
       - ./logs:/logs
     depends_on:
-      - mysqldb
+      - mysqldbb
