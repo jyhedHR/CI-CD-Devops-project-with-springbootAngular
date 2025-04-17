@@ -75,6 +75,16 @@ pipeline {
                     sh 'docker compose up -d'
                 }
             }
+            stage('Mailing Test') {
+                        steps {
+                            echo "✅ Envoi de mail de test réussi."
+                            emailext(
+                                subject: "Test Email from Jenkins",
+                                body: "This is a test email to ensure the mailing functionality is working in the Jenkins pipeline.",
+                                to: 'nehdieya02@gmail.com'
+                            )
+                        }
+                    }
     }
      post {
          success {
