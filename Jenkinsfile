@@ -83,7 +83,7 @@ pipeline {
                                 body: """<p>Hello Eya 👋</p>
                                          <p>This is a debug email from Jenkins pipeline.</p>""",
                                 to: 'nehdieya02@gmail.com',
-                                from: 'tonadresse@gmail.com',
+                                from: 'nehdieya02@gmail.com',
                                 replyTo: 'tonadresse@gmail.com',
                                 mimeType: 'text/html'
                             )
