@@ -2,11 +2,17 @@ pipeline {
 
     agent any
 
-    environment {
-        JAVA_HOME = "/usr/lib/jvm/java-17-openjdk-amd64/"
-        M2_HOME = "/opt/apache-maven-3.6.3"
-        PATH = "$M2_HOME/bin:$PATH"
-    }
+   environment {
+       JAVA_HOME = "/usr/lib/jvm/java-17-openjdk-amd64/"
+       M2_HOME = "/opt/apache-maven-3.6.3"
+       PATH = "$M2_HOME/bin:$PATH"
+       DOCKERHUB_USER = "eyanehdi"
+       IMAGE_NAME = "gestion-station-ski"
+       IMAGE_TAG = "1.0"
+       LOCAL_IMAGE = "EyaNehdi_Groupe2_gestion-station-ski:1.0"
+       REMOTE_IMAGE = "${DOCKERHUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
+   }
+
 
     stages {
 
@@ -54,6 +60,24 @@ pipeline {
                 }
             }
         }
+        stage('Push to DockerHub') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'DockerHub',
+                        usernameVariable: 'DOCKERHUB_USER',
+                        passwordVariable: 'DOCKERHUB_PASS'
+                    )
+                ]) {
+                    sh "docker tag ${LOCAL_IMAGE} ${REMOTE_IMAGE}"
+                    sh "echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin"
+                    sh "docker push ${REMOTE_IMAGE}"
+                    sh "docker logout"
+                }
+            }
+        }
+
+
 
         stage('Docker Compose build') {
             steps {
