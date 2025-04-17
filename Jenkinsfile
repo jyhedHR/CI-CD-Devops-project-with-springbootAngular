@@ -54,7 +54,7 @@ pipeline {
                     def imageExists = sh(script: "docker images -q eyanehdi_groupe2_gestion-station-ski:1.0", returnStdout: true).trim()
                     if (!imageExists) {
                         echo "Image not found, building..."
-                        sh "docker build -t eyanehdi_groupe2_gestion-station-ski:1.0 ."
+                        sh "docker build -t ${LOCAL_IMAGE}  ."
                     } else {
                         echo "Image already exists, skipping build."
                     }
