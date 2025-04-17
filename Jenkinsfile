@@ -7,7 +7,7 @@ pipeline {
        M2_HOME = "/opt/apache-maven-3.6.3"
        PATH = "$M2_HOME/bin:$PATH"
        DOCKERHUB_USER = "eyanehdi"
-       IMAGE_NAME = "gestion-station-ski"
+       IMAGE_NAME = "eyanehdi_groupe2_gestion-station-ski:1.0"
        IMAGE_TAG = "1.0"
        LOCAL_IMAGE = "eyanehdi_groupe2_gestion-station-ski:1.0"
        REMOTE_IMAGE = "${DOCKERHUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
