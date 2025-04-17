@@ -90,7 +90,7 @@ stage('Nexus') {
     post {
         success {
             echo ' Le pipeline Jenkins pour le projet "gestionski" a terminé sans erreurs.'
-            mail to: '23yass23yass@gmail.com',
+            mail to: 'yasminebouteraa21@gmail.com',
                  subject: 'Succès du Pipeline - gestionski',
                  body: """
     Salut Bouteraa,
@@ -107,7 +107,7 @@ stage('Nexus') {
 
         failure {
             echo ' Une erreur s’est produite lors de l’exécution du pipeline Jenkins.'
-            mail to: '23yass23yass@gmail.com',
+            mail to: 'yasminebouteraa21@gmail.com',
                  subject: 'Échec du Pipeline - gestionski',
                  body: """
     Salut Bouteraa,
