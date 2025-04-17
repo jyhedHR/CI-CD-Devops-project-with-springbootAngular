@@ -1,8 +1,8 @@
 version: "3.9"
 services:
-  mysqldbb:
-    image: mysql:5.7
-    container_name: mysqldbb
+
+  mysqldb1:
+    image: "mysql:5.6"
     environment:
       - MYSQL_ROOT_PASSWORD=
       - MYSQL_DATABASE=stationSki
@@ -21,4 +21,4 @@ services:
     volumes:
       - ./logs:/logs
     depends_on:
-      - mysqldbb
+      - mysqldb1
