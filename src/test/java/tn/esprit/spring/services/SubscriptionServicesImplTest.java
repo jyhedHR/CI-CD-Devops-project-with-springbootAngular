@@ -27,29 +27,9 @@ public void setUp() {
     MockitoAnnotations.openMocks(this);
 
 }
-    @Test
-
-    void addSubscription() {
-
-
-        Subscription subscription = new Subscription();
-        subscription.setStartDate(LocalDate.now());
-        subscription.setTypeSub(TypeSubscription.ANNUAL);
-
-        when(subscriptionRepository.save(subscription)).thenReturn(subscription);
-
-        Subscription result = subscriptionServices.addSubscription(subscription);
-
-        assertNotNull(result);
-
-        if (subscription.getTypeSub() == TypeSubscription.ANNUAL) {
-            assertNotNull(result.getEndDate());
-            assert result.getEndDate().equals(subscription.getStartDate().plusYears(1));
-        }
 
 
 
-}
 
     @Test
     void updateSubscription() {

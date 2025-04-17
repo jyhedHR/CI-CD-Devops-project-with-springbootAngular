@@ -25,7 +25,6 @@ public interface ISubscriptionServices {
 	void retrieveSubscriptions();
 
 	Iterable<Subscription> GetallSubscription();
-	Subscription assignSubscriptionDynamically(Long numSkier);
 	public Subscription getsubById(Long numSub);
 
 }
