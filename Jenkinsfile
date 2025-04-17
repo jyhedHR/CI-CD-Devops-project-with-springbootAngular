@@ -72,8 +72,8 @@ pipeline {
         }
         stage('Docker Compose Up') {
                             steps {
-
-                            sh ' sudo docker compose build -v '
+                           sh ' sudo docker compose down -v '
+                            sh ' sudo docker compose build  '
                                 sh ' sudo docker compose up  '
                             }
                         }
