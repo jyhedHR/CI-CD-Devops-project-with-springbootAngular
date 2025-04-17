@@ -19,5 +19,13 @@ public interface ISubscriptionServices {
 
 	List<Subscription> retrieveSubscriptionsByDates(LocalDate startDate, LocalDate endDate);
 
+	void removeSubscription (Long numSub);
+
+
 	void retrieveSubscriptions();
+
+	Iterable<Subscription> GetallSubscription();
+	Subscription assignSubscriptionDynamically(Long numSkier);
+	public Subscription getsubById(Long numSub);
+
 }

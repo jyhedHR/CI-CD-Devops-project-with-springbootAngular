@@ -8,14 +8,14 @@ services:
       - MYSQL_DATABASE=stationSki
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     ports:
-      - 3306:3306
+      - 3308:3306
     volumes:
       - ./mysql:/var/lib/mysql
     restart: unless-stopped
 
 
   gestionski:
-    image: gestion-station-ski:1.0
+    image: lourasjihed/alpine:1.0.0
     ports:
       - 8089:8089
     restart: unless-stopped

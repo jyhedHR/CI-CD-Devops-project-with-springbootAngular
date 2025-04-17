@@ -23,20 +23,21 @@ public class SubscriptionServicesImpl implements ISubscriptionServices{
 
     private ISkierRepository skierRepository;
 
+    private final EmailService emailService;
+
+
     @Override
     public Subscription addSubscription(Subscription subscription) {
-        switch (subscription.getTypeSub()) {
-            case ANNUAL:
-                subscription.setEndDate(subscription.getStartDate().plusYears(1));
-                break;
-            case SEMESTRIEL:
-                subscription.setEndDate(subscription.getStartDate().plusMonths(6));
-                break;
-            case MONTHLY:
-                subscription.setEndDate(subscription.getStartDate().plusMonths(1));
-                break;
-        }
-        return subscriptionRepository.save(subscription);
+
+        Subscription saved= subscriptionRepository.save(subscription);
+
+        String subject = "Confirmation de votre Abonnement";
+        String body = "Bonjour,\n\nVotre Abonnement a bien été reçue.\nMerci pour votre confiance.";
+        emailService.sendConfirmationEmail("jihedb01@gmail.com", subject, body);
+
+
+
+        return saved;
     }
 
     @Override
@@ -69,12 +70,67 @@ public class SubscriptionServicesImpl implements ISubscriptionServices{
         }
     }
 
-   // @Scheduled(cron = "* 0 9 1 * *") /* Cron expression to run a job every month at 9am */
-    @Scheduled(cron = "*/30 * * * * *") /* Cron expression to run a job every 30 secondes */
-    public void showMonthlyRecurringRevenue() {
-        Float revenue = subscriptionRepository.recurringRevenueByTypeSubEquals(TypeSubscription.MONTHLY)
-                + subscriptionRepository.recurringRevenueByTypeSubEquals(TypeSubscription.SEMESTRIEL)/6
-                + subscriptionRepository.recurringRevenueByTypeSubEquals(TypeSubscription.ANNUAL)/12;
-        log.info("Monthly Revenue = " + revenue);
+
+    @Override
+    public List<Subscription> GetallSubscription() {
+        return (List<Subscription>) subscriptionRepository.findAll();
     }
+
+
+
+    @Override
+    public Subscription assignSubscriptionDynamically(Long numSkier) {
+        Skier skier = skierRepository.findById(numSkier)
+                .orElseThrow(() -> new RuntimeException("Skier not found"));
+
+        LocalDate today = LocalDate.now();
+        int age = today.getYear() - skier.getDateOfBirth().getYear();
+
+        LocalDate startDate = today;
+        LocalDate endDate;
+        Float price;
+        TypeSubscription typeSub;
+
+        boolean isWinter = (today.getMonthValue() == 12 || today.getMonthValue() <= 2);
+        boolean isSummer = (today.getMonthValue() >= 6 && today.getMonthValue() <= 8);
+
+        if (age < 18) {
+            typeSub = TypeSubscription.MONTHLY;
+            endDate = startDate.plusMonths(1);
+            price = isWinter ? 90f : 60f;
+        } else if (age <= 40) {
+            typeSub = TypeSubscription.SEMESTRIEL;
+            endDate = startDate.plusMonths(4);
+            price = isWinter ? 200f : 140f;
+        } else {
+            typeSub = TypeSubscription.ANNUAL;
+            endDate = startDate.plusYears(1);
+            price = isSummer ? 160f : 220f;
+        }
+
+        Subscription subscription = new Subscription();
+        subscription.setStartDate(startDate);
+        subscription.setEndDate(endDate);
+        subscription.setTypeSub(typeSub);
+        subscription.setPrice(price);
+
+        Subscription savedSub = subscriptionRepository.save(subscription);
+        skier.setSubscription(savedSub);
+        skierRepository.save(skier);
+
+        return savedSub;
+    }
+
+
+    @Override
+    public void removeSubscription(Long numSub) {
+        subscriptionRepository.deleteById(numSub);
+    }
+
+    @Override
+    public Subscription getsubById(Long numSub) {
+        return subscriptionRepository.findById(numSub)
+                .orElseThrow(() -> new RuntimeException("subs non trouvée"));
+    }
+
 }
