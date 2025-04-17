@@ -49,6 +49,11 @@ pipeline {
             }
         }
 
+        stage('Package Projet') {
+            steps {
+                sh 'mvn clean package -DskipTests'
+            }
+        }
           stage('Build Docker Image') {
                     steps {
                         sh 'sudo docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .'  // Removed sudo
