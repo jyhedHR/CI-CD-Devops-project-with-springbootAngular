@@ -13,7 +13,7 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:4200") // Angular default port
+                        .allowedOrigins("http://192.168.33.10:4200") // Angular default port
                         .allowedMethods("*")
                         .allowedHeaders("*");
             }

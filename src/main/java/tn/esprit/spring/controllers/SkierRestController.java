@@ -13,7 +13,7 @@ import java.util.List;
 @Tag(name = "\uD83C\uDFC2 Skier Management")
 @RestController
 @RequestMapping("/skier")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://192.168.33.10:4200")
 @RequiredArgsConstructor
 public class SkierRestController {
 

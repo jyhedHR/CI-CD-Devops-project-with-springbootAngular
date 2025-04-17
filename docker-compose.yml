@@ -18,3 +18,12 @@ services:
       - "8089:8089"
     depends_on:
       - mysqldb
+
+
+
+  Frontand:
+    build:
+      context: ./Frontand/gestionski
+    image: "gestion_skier_image_frontand"
+    ports:
+      - "4200:4200"
