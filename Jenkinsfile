@@ -9,7 +9,7 @@ pipeline {
        DOCKERHUB_USER = "eyanehdi"
        IMAGE_NAME = "gestion-station-ski"
        IMAGE_TAG = "1.0"
-       LOCAL_IMAGE = "EyaNehdi_Groupe2_gestion-station-ski:1.0"
+       LOCAL_IMAGE = "eyanehdi_groupe2_gestion-station-ski:1.0"
        REMOTE_IMAGE = "${DOCKERHUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
    }
 
