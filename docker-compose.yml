@@ -18,7 +18,6 @@ services:
     image: lourasjihed/alpine:1.0.0
     ports:
       - 8089:8089
-    restart: unless-stopped
     volumes:
       - ./logs:/logs
     depends_on:
