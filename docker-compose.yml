@@ -1,25 +1,20 @@
 version: "2.32.4"
 services:
+
   mysqldb:
-    image: mysql:5.7
-    container_name: mysqldb
+    image: "mysql:5.6"
     environment:
       - MYSQL_ROOT_PASSWORD=
       - MYSQL_DATABASE=stationSki
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     ports:
-      - 3307:3306
-    volumes:
-      - ./mysql:/var/lib/mysql
-    restart: unless-stopped
+      - 3307:3307
 
-
-  gestionski:
-    image: jyhedhr/gestion-station-ski:latest
+  GestionSki:
+    build:
+      context: ./
+    image: "gestion_skier_image"
     ports:
-      - 8089:8089
-    restart: unless-stopped
-    volumes:
-      - ./logs:/logs
+      - "8089:8089"
     depends_on:
       - mysqldb

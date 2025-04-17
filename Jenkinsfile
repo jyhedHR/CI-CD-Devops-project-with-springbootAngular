@@ -63,20 +63,7 @@ pipeline {
         }
     }
         }
-      stage('Run Docker Container') {
-            steps {
-               script {
-                    // Check if the container exists and remove it if it does
-                    def containerExists = sh(script: "sudo docker ps -a -q -f name=gestion-station-ski", returnStdout: true).trim()
-                    if (containerExists) {
-                        sh 'sudo docker stop gestion-station-ski || true'
-                        sh 'sudo docker rm gestion-station-ski || true'
-                    }
-                    // Run the new container
-                    sh 'sudo docker run -d -p 8089:8089 --name gestion-station-ski ${DOCKER_IMAGE}:${DOCKER_TAG}'
-                }
-            }
-        }
+
 
         stage('Deploy') {
             steps {
@@ -85,7 +72,7 @@ pipeline {
         }
         stage('Docker Compose Up') {
                             steps {
-                                sh ' sudo docker compose up -d'
+                                sh ' sudo docker compose up '
                             }
                         }
     }
