@@ -6,23 +6,26 @@ pipeline {
         M2_HOME = "/opt/apache-maven-3.6.3"
         PATH = "$M2_HOME/bin:$PATH"
 
-        AZURE_SUBSCRIPTION_ID = "1c9a7c13-fd77-476c-8041-ce7950715530" // Azure subscription ID
-                AZURE_CLIENT_ID = credentials('azure_client_id')             // Azure client ID
-                AZURE_CLIENT_SECRET = credentials('azure_client_secret')     // Azure client secret
-                AZURE_TENANT_ID = "604f1a96-cbe8-43f8-abbf-f8eaf5d85730"             // Azure tenant ID
-                RESOURCE_GROUP = "MyResourceGroup" // Your resource group name
-                PROD_VM_NAME = "prod-vm"           // Your production VM name
-                TEST_VM_NAME = "test-vm"           // Your test VM name
+        AZURE_SUBSCRIPTION_ID = "1c9a7c13-fd77-476c-8041-ce7950715530"
+        AZURE_CLIENT_ID = credentials('azure_client_id')
+        AZURE_CLIENT_SECRET = credentials('azure_client_secret')
+        AZURE_TENANT_ID = "604f1a96-cbe8-43f8-abbf-f8eaf5d85730"
+        RESOURCE_GROUP = "MyResourceGroup"
+        PROD_VM_NAME = "prod-vm"
+        TEST_VM_NAME = "test-vm"
     }
 
     stages {
 
         stage('GIT') {
             steps {
-                git branch: 'NehdiEya_4TWIN5_Groupe2',
-                    url: 'git@github.com:jyhedHR/4twin5_Group2_gestion-station-skier.git'
+                script {
+                    git branch: 'NehdiEya_4TWIN5_Groupe2',
+                        url: 'git@github.com:jyhedHR/4twin5_Group2_gestion-station-skier.git'
+                }
             }
         }
+
         stage('Compile Stage') {
             steps {
                 sh 'mvn clean compile'
@@ -72,50 +75,47 @@ pipeline {
                 sh 'docker compose up -d'
             }
         }
-
-
     }
-     post {
-             success {
-                 echo '✅ Pipeline exécuté avec succès.'
-                 emailext(
-                     subject: "✅ Succès du Pipeline - DevopsSkiStation",
-                     body: """
-                         Bonjour,
 
-                         Le pipeline Jenkins s’est exécuté avec succès. 🎉
+    post {
+        success {
+            echo '✅ Pipeline exécuté avec succès.'
+            emailext(
+                subject: "✅ Succès du Pipeline - DevopsSkiStation",
+                body: """
+                    Bonjour,
 
-                         ✔ Projet : DevopsSkiStation
-                         📅 Date : ${new Date()}
+                    Le pipeline Jenkins s’est exécuté avec succès. 🎉
 
-                         Cordialement,
-                         Jenkins
-                     """,
-                     to: 'negamex4274@gmail.com'
-                 )
-             }
+                    ✔ Projet : DevopsSkiStation
+                    📅 Date : ${new Date()}
 
-             failure {
-                 echo '❌ Le pipeline a échoué.'
-                 emailext(
-                     subject: "❌ Échec du Pipeline - DevopsSkiStation",
-                     body: """
-                         Bonjour,
+                    Cordialement,
+                    Jenkins
+                """,
+                to: 'negamex4274@gmail.com'
+            )
+        }
 
-                         Le pipeline Jenkins a échoué. 🚨
+        failure {
+            echo '❌ Le pipeline a échoué.'
+            emailext(
+                subject: "❌ Échec du Pipeline - DevopsSkiStation",
+                body: """
+                    Bonjour,
 
-                         ✔ Projet : DevopsSkiStation
-                         📅 Date : ${new Date()}
+                    Le pipeline Jenkins a échoué. 🚨
 
-                         Merci de consulter Jenkins pour plus de détails.
+                    ✔ Projet : DevopsSkiStation
+                    📅 Date : ${new Date()}
 
-                         Cordialement,
-                         Jenkins
-                     """,
-                     to: 'negamex4274@gmail.com'
-                 )
-             }
-         }
-     }
+                    Merci de consulter Jenkins pour plus de détails.
 
-
+                    Cordialement,
+                    Jenkins
+                """,
+                to: 'negamex4274@gmail.com'
+            )
+        }
+    }
+}
