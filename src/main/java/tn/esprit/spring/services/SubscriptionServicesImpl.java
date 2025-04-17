@@ -29,15 +29,12 @@ public class SubscriptionServicesImpl implements ISubscriptionServices{
     @Override
     public Subscription addSubscription(Subscription subscription) {
 
-        Subscription saved= subscriptionRepository.save(subscription);
-
-        String subject = "Confirmation de votre Abonnement";
-        String body = "Bonjour,\n\nVotre Abonnement a bien été reçue.\nMerci pour votre confiance.";
-        emailService.sendConfirmationEmail("jihedb01@gmail.com", subject, body);
+        return subscriptionRepository.save(subscription);
 
 
 
-        return saved;
+
+
     }
 
     @Override
