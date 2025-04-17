@@ -79,7 +79,7 @@ pipeline {
                         steps {
                             echo "✅ Envoi de mail de test réussi."
                             mail to: 'nehdieya02@gmail.com',
-                                 subject: '📧 Test simple Jenkins mail',
+                                 subject: ' Test simple Jenkins mail',
                                  body: 'This is a plain Jenkins email using the basic "mail" step.'
 
 
