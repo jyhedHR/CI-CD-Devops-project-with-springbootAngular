@@ -77,23 +77,45 @@ pipeline {
             }
     }
      post {
-         always {
-             emailext(
-                 subject: "Pipeline Status: ${currentBuild.currentResult}",
-                 body: """
-                     <html>
-                     <body>
-                         <p><b>Build Status:</b> ${currentBuild.currentResult}</p>
-                         <p><b>Build Number:</b> ${currentBuild.number}</p>
-                         <p><b>Job:</b> ${env.JOB_NAME}</p>
-                         <p><b>Build URL:</b> <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
-                     </body>
-                     </html>
-                 """,
-                 mimeType: 'text/html',
-                 to: "nehdieya02@gmail.com"
-             )
-         }
-     }
+         success {
+                     echo '✅ Pipeline exécuté avec succès.'
+                     emailext(
+                         subject: "Succès du Pipeline - gestionski",
+                         body: """
+                             Bonjour,
+
+                             Le pipeline Jenkins s’est exécuté avec succès. 🎉
+
+                             ✔ Projet : gestionski
+                             📅 Date : ${new Date()}
+
+                             Cordialement,
+                             Jenkins
+                         """,
+                         to: 'nehdieya02@gmail.com'
+                     )
+                 }
+
+                 failure {
+                     echo '❌ Le pipeline a échoué.'
+                     emailext(
+                         subject: " Échec du Pipeline - Gestion ski",
+                         body: """
+                             Bonjour,
+
+                             Le pipeline Jenkins a échoué. 🚨
+
+                             ✔ Projet : gestionski
+                             📅 Date : ${new Date()}
+
+                             Merci de consulter Jenkins pour plus de détails.
+
+                             Cordialement,
+                             Jenkins
+                         """,
+                         to: 'nehdieya02@gmail.com'
+                     )
+                 }
+             }
 
 }
