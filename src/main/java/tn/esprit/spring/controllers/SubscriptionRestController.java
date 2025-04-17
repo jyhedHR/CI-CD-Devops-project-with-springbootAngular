@@ -61,7 +61,11 @@ public class SubscriptionRestController {
     }
 
 
-
+    @Operation(description = "Affecter dynamiquement un abonnement à un skieur")
+    @PostMapping("/assign-dynamic/{skierId}")
+    public Subscription assignDynamic(@PathVariable Long skierId) {
+        return subscriptionServices.assignSubscriptionDynamically(skierId);
+    }
 
 
     @GetMapping("/sub/{numSub}/pdf")

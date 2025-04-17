@@ -1,7 +1,7 @@
 version: "3.9"
 services:
 
-  mysqldb1:
+  mysqldb:
     image: "mysql:5.6"
     environment:
       - MYSQL_ROOT_PASSWORD=
@@ -9,16 +9,10 @@ services:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     ports:
       - 3308:3306
-    volumes:
-      - ./mysql:/var/lib/mysql
-    restart: unless-stopped
-
 
   gestionski:
     image: lourasjihed/alpine:1.0.0
     ports:
       - 8089:8089
-    volumes:
-      - ./logs:/logs
     depends_on:
-      - mysqldb1
+      - mysqldb

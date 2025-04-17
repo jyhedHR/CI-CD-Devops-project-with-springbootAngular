@@ -29,12 +29,15 @@ public class SubscriptionServicesImpl implements ISubscriptionServices{
     @Override
     public Subscription addSubscription(Subscription subscription) {
 
-        return subscriptionRepository.save(subscription);
+        Subscription saved= subscriptionRepository.save(subscription);
+
+        String subject = "Confirmation de votre Abonnement";
+        String body = "Bonjour,\n\nVotre Abonnement a bien été reçue.\nMerci pour votre confiance.";
+        emailService.sendConfirmationEmail("jihedb01@gmail.com", subject, body);
 
 
 
-
-
+        return saved;
     }
 
     @Override
@@ -75,7 +78,48 @@ public class SubscriptionServicesImpl implements ISubscriptionServices{
 
 
 
+    @Override
+    public Subscription assignSubscriptionDynamically(Long numSkier) {
+        Skier skier = skierRepository.findById(numSkier)
+                .orElseThrow(() -> new RuntimeException("Skier not found"));
 
+        LocalDate today = LocalDate.now();
+        int age = today.getYear() - skier.getDateOfBirth().getYear();
+
+        LocalDate startDate = today;
+        LocalDate endDate;
+        Float price;
+        TypeSubscription typeSub;
+
+        boolean isWinter = (today.getMonthValue() == 12 || today.getMonthValue() <= 2);
+        boolean isSummer = (today.getMonthValue() >= 6 && today.getMonthValue() <= 8);
+
+        if (age < 18) {
+            typeSub = TypeSubscription.MONTHLY;
+            endDate = startDate.plusMonths(1);
+            price = isWinter ? 90f : 60f;
+        } else if (age <= 40) {
+            typeSub = TypeSubscription.SEMESTRIEL;
+            endDate = startDate.plusMonths(4);
+            price = isWinter ? 200f : 140f;
+        } else {
+            typeSub = TypeSubscription.ANNUAL;
+            endDate = startDate.plusYears(1);
+            price = isSummer ? 160f : 220f;
+        }
+
+        Subscription subscription = new Subscription();
+        subscription.setStartDate(startDate);
+        subscription.setEndDate(endDate);
+        subscription.setTypeSub(typeSub);
+        subscription.setPrice(price);
+
+        Subscription savedSub = subscriptionRepository.save(subscription);
+        skier.setSubscription(savedSub);
+        skierRepository.save(skier);
+
+        return savedSub;
+    }
 
 
     @Override
