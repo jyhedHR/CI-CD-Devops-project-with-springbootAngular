@@ -74,4 +74,55 @@ stage('Nexus') {
 
 
     }
+
+
+
+    stage('Mail Test') {
+        steps {
+            echo " Envoi du mail de test en cours..."
+            mail to: '23yass23yass@gmail.com',
+                 subject: ' Jenkins Test  mail',
+                 body: 'This is a plain Jenkins email using the basic "mail" step.'
+
+        }
+    }
+
+    post {
+        success {
+            echo ' Le pipeline Jenkins pour le projet "gestionski" a terminé sans erreurs.'
+            mail to: '23yass23yass@gmail.com',
+                 subject: 'Succès du Pipeline - gestionski',
+                 body: """
+    Salut Bouteraa,
+
+    Le pipeline Jenkins s’est exécuté avec succès.
+
+    ✔ Projet : gestionski
+     Date : ${new Date()}
+
+    Cordialement,
+    Jenkins
+    """
+        }
+
+        failure {
+            echo ' Une erreur s’est produite lors de l’exécution du pipeline Jenkins.'
+            mail to: '23yass23yass@gmail.com',
+                 subject: 'Échec du Pipeline - gestionski',
+                 body: """
+    Salut Bouteraa,
+
+    Le pipeline Jenkins a échoué.
+
+    ✔ Projet : gestionski
+    Date : ${new Date()}
+
+    Merci de consulter Jenkins pour autre informations ou verifications.
+
+    Cordialement,
+    Jenkins
+    """
+        }
+    }
+
 }
