@@ -1,0 +1,70 @@
+<h2>{{ selectedSkierId ? '✏️ Update Skier' : '➕ Add a New Skier' }}</h2>
+<h2>➕ Add a New Skier</h2>
+<form [formGroup]="skierForm" (ngSubmit)="addSkier()">
+  <label>First Name:
+    <input formControlName="firstName" />
+  </label><br />
+
+  <label>Last Name:
+    <input formControlName="lastName" />
+  </label><br />
+
+  <label>City:
+    <input formControlName="city" />
+  </label><br />
+
+  <label>Date of Birth:
+    <input type="date" formControlName="dateOfBirth" />
+  </label><br />
+
+  <div formGroupName="subscription">
+    <label>Subscription Start Date:
+      <input type="date" formControlName="startDate" />
+    </label><br />
+
+    <label>Subscription Type:
+      <select formControlName="typeSub">
+        <option value="DAILY">DAILY</option>
+        <option value="WEEKLY">WEEKLY</option>
+        <option value="MONTHLY">MONTHLY</option>
+        <option value="ANNUAL">ANNUAL</option>
+      </select>
+    </label>
+  </div>
+
+  <br />
+  <button type="submit" [disabled]="skierForm.invalid">
+    {{ selectedSkierId ? 'Update' : 'Add' }}
+  </button>
+</form>
+
+
+<hr>
+
+<h2>🎿 List of Skiers</h2>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>City</th>
+      <th>Date of Birth</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let skier of skiers">
+      <td>{{ skier.numSkier }}</td>
+      <td>{{ skier.firstName }}</td>
+      <td>{{ skier.lastName }}</td>
+      <td>{{ skier.city }}</td>
+      <td>{{ skier.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
+      <td>
+        <button (click)="editSkier(skier)">✏️ Edit</button>
+        <button (click)="deleteSkier(skier.numSkier!)">🗑️ Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
