@@ -78,15 +78,10 @@ pipeline {
             stage('Mailing Test') {
                         steps {
                             echo "✅ Envoi de mail de test réussi."
-                            emailext(
-                                subject: "🐛 Jenkins Debug Email from Pipeline",
-                                body: """<p>Hello Eya 👋</p>
-                                         <p>This is a debug email from Jenkins pipeline.</p>""",
-                                to: 'nehdieya02@gmail.com',
-                                from: 'nehdieya02@gmail.com',
-                                replyTo: 'tonadresse@gmail.com',
-                                mimeType: 'text/html'
-                            )
+                            mail to: 'nehdieya02@gmail.com',
+                                 subject: '📧 Test simple Jenkins mail',
+                                 body: 'This is a plain Jenkins email using the basic "mail" step.'
+
 
                         }
                     }
