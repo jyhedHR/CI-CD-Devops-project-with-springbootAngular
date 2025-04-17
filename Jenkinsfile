@@ -74,7 +74,12 @@ pipeline {
                 echo "Envoi du mail de test en cours..."
                 mail to: 'yasminebouteraa21@gmail.com',
                      subject: 'Jenkins Test mail',
-                     body: 'This is a plain Jenkins email using the basic "mail" step.'
+                     body: 'Bonjour,
+                            Ceci est un e-mail de test envoyé automatiquement par Jenkins pour vérifier la configuration de l'envoi de mails
+                            Si vous recevez ce message, cela signifie que tout fonctionne correctement
+                             Cordialement,
+                             Votre serveur Jenkins'
+
             }
         }
     }
