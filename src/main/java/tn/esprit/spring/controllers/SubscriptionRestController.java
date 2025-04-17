@@ -20,7 +20,7 @@ import java.util.Set;
 
 @Tag(name = "\uD83D\uDC65 Subscription Management")
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://192.168.33.10:4200")
 @RequestMapping("/subscription")
 @RequiredArgsConstructor
 public class SubscriptionRestController {
