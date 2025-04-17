@@ -11,6 +11,8 @@ services:
       - 3310:3306
 
   gestionski:
+    build:
+      context: ./
     image: lourasjihed/alpine:1.0.0
     ports:
       - 8089:8089
