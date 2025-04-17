@@ -14,10 +14,11 @@ import java.util.List;
 
 @Tag(name = "\uD83D\uDDD3️Registration Management")
 @RestController
-@RequestMapping("/registration")
+@RequestMapping("/reg")
 @RequiredArgsConstructor
 public class RegistrationRestController {
     private final IRegistrationServices registrationServices;
+
     @Operation(description = "Add Registration")
     @PostMapping("/add")
     public Registration addRegistration(@RequestBody Registration registration){
