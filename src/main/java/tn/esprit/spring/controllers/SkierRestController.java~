@@ -67,7 +67,7 @@ public class SkierRestController {
         return skierServices.retrieveAllSkiers();
     }
     @Operation(description = "update  Skier")
-    @PutMapping("/update")
+    @GetMapping("/update")
     public Skier updateSkier( @RequestBody Skier skier){
         return skierServices.updateSkier(skier);
     }
