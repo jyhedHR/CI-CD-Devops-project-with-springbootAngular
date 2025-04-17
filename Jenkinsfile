@@ -51,7 +51,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    def imageExists = sh(script: "docker images -q eyanehdi_groupe2_gestion-station-ski:1.0", returnStdout: true).trim()
+                    def imageExists = sh(script: "docker images -q ${LOCAL_IMAGE}", returnStdout: true).trim()
                     if (!imageExists) {
                         echo "Image not found, building..."
                         sh "docker build -t ${LOCAL_IMAGE}  ."
@@ -70,7 +70,7 @@ pipeline {
                         passwordVariable: 'DOCKERHUB_PASS'
                     )
                 ]) {
-                    sh "docker tag ${LOCAL_IMAGE} ${REMOTE_IMAGE}"
+                    sh "docker tag  ${REMOTE_IMAGE}"
                     sh "echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin"
                     sh "docker push ${REMOTE_IMAGE}"
                     sh "docker logout"
