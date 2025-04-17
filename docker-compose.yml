@@ -16,6 +16,7 @@ services:
 
   gestionski:
     image: gestion-station-ski:1.0
+    container_name: gestionski
     ports:
       - 8089:8089
     restart: unless-stopped
@@ -23,3 +24,16 @@ services:
       - ./logs:/logs
     depends_on:
       - mysqldb
+
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - /home/vagrant/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    depends_on:
+      - gestionski
