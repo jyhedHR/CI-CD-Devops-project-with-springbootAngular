@@ -94,7 +94,7 @@ public class SkierServicesImpl implements tn.esprit.spring.services.ISkierServic
         } else {
             throw new RuntimeException("Skier with ID " + skier.getNumSkier() + " not found");
         }
-
+        return skierRepository.save(skier);
     }
 
     @Override

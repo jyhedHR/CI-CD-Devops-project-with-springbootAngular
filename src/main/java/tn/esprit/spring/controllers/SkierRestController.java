@@ -66,5 +66,10 @@ public class SkierRestController {
     public List<Skier> getAllSkiers(){
         return skierServices.retrieveAllSkiers();
     }
+    @Operation(description = "update  Skier")
+    @GetMapping("/update")
+    public Skier updateSkier( @RequestBody Skier skier){
+        return skierServices.updateSkier(skier);
+    }
 
 }

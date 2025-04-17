@@ -19,7 +19,7 @@ public interface ISkierServices {
 
 	Skier retrieveSkier (Long numSkier);
 
-
+Skier updateSkier(Skier skier);
 	Skier assignSkierToPiste(Long numSkieur, Long numPiste);
 
 	List<Skier> retrieveSkiersBySubscriptionType(TypeSubscription typeSubscription);
