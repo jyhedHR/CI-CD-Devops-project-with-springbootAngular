@@ -30,12 +30,12 @@ public class SkierRestController {
                                            @PathVariable("numCourse") Long numCourse){
         return  skierServices.addSkierAndAssignToCourse(skier,numCourse);
     }
-    @Operation(description = "Assign Skier To Subscription")
-    @PutMapping("/assignToSub/{numSkier}/{numSub}")
-    public Skier assignToSubscription(@PathVariable("numSkier")Long numSkier,
-                               @PathVariable("numSub") Long numSub){
-        return skierServices.assignSkierToSubscription(numSkier, numSub);
-    }
+    //@Operation(description = "Assign Skier To Subscription")
+    //@PutMapping("/assignToSub/{numSkier}/{numSub}")
+    //public Skier assignToSubscription(@PathVariable("numSkier")Long numSkier,
+                            //   @PathVariable("numSub") Long numSub){
+        //return skierServices.assignSkierToSubscription(numSkier, numSub);
+    //}
 
     @Operation(description = "Assign Skier To Piste")
     @PutMapping("/assignToPiste/{numSkier}/{numPiste}")

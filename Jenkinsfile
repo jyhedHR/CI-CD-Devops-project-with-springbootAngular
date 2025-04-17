@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Hello Test') {
             steps {
-                echo 'salut Yasmine Bouteraa'
+                echo 'salut je suis Yasmine Bouteraa'
             }
         }
 
@@ -57,10 +57,10 @@ stage('Nexus') {
                 script {
                     def imageExists = sh(script: "docker images -q gestion-station-ski:1.0", returnStdout: true).trim()
                     if (!imageExists) {
-                        echo "Image not found, building..."
+                        echo "Image not found"
                         sh "docker build -t gestion-station-ski:1.0 ."
                     } else {
-                        echo "Image already exists, skipping build."
+                        echo "Image  exists"
                     }
                 }
             }

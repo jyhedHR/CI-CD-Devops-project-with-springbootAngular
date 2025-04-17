@@ -45,13 +45,13 @@ public class SkierServicesImpl implements ISkierServices {
         return skierRepository.save(skier);
     }
 
-    @Override
-    public Skier assignSkierToSubscription(Long numSkier, Long numSubscription) {
-        Skier skier = skierRepository.findById(numSkier).orElse(null);
-        Subscription subscription = subscriptionRepository.findById(numSubscription).orElse(null);
-        skier.setSubscription(subscription);
-        return skierRepository.save(skier);
-    }
+    //@Override
+    //public Skier assignSkierToSubscription(Long numSkier, Long numSubscription) {
+        //Skier skier = skierRepository.findById(numSkier).orElse(null);
+        ///Subscription subscription = subscriptionRepository.findById(numSubscription).orElse(null);
+        //skier.setSubscription(subscription);
+        //return skierRepository.save(skier);
+    //}
 
     @Override
     public Skier addSkierAndAssignToCourse(Skier skier, Long numCourse) {

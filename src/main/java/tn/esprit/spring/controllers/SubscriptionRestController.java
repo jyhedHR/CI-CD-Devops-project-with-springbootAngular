@@ -41,11 +41,11 @@ public class SubscriptionRestController {
     public Subscription updateSubscription(@RequestBody Subscription subscription){
         return  subscriptionServices.updateSubscription(subscription);
     }
-    @Operation(description = "Retrieve Subscriptions created between two dates")
-    @GetMapping("/all/{date1}/{date2}")
-    public List<Subscription> getSubscriptionsByDates(@PathVariable("date1") LocalDate startDate,
-                                                      @PathVariable("date2") LocalDate endDate){
-        return subscriptionServices.retrieveSubscriptionsByDates(startDate, endDate);
-    }
+    //@Operation(description = "Retrieve Subscriptions created between two dates")
+   // @GetMapping("/all/{date1}/{date2}")
+    //public List<Subscription> getSubscriptionsByDates(@PathVariable("date1") LocalDate startDate,
+                                                   //   @PathVariable("date2") LocalDate endDate){
+      //  return subscriptionServices.retrieveSubscriptionsByDates(startDate, endDate);
+   // }
 
 }
