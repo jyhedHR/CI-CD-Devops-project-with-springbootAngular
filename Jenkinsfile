@@ -54,7 +54,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    def imageExists = sh(script: "docker images -q ${LOCAL_IMAGE}", returnStdout: true).trim()
+                    def imageExists = sh(script: "docker images -q eyanehdi/${LOCAL_IMAGE}", returnStdout: true).trim()
                     if (!imageExists) {
                         echo "Image not found, building..."
                         sh "docker build -t ${LOCAL_IMAGE}  ."
