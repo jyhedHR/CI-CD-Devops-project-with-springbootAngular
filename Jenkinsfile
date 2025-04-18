@@ -1,8 +1,13 @@
 pipeline {
     agent any
     environment {
-        DOCKER_IMAGE = "gestion-station-ski"
-        DOCKER_TAG = "latest"
+      JAVA_HOME = "/usr/lib/jvm/java-17-openjdk-amd64/"
+       M2_HOME = "/opt/apache-maven-3.6.3"
+        DOCKERHUB_USER = "yasminebouteraa"
+               IMAGE_NAME = "bouteraayasmine-4twin5-g2-gestion-station-ski"
+               IMAGE_TAG = "1.0"
+               LOCAL_IMAGE = "${IMAGE_NAME}:${IMAGE_TAG}"
+               REMOTE_IMAGE = "${DOCKERHUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
     }
 
     tools {
@@ -49,36 +54,36 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    def imageExists = sh(script: "yasminebouteraa/bouteraayasmine-4twin5-g2-gestion-station-ski:1.0 bouteraayasmine-4twin5-g2-gestion-station-ski:1.0", returnStdout: true).trim()
-                    if (!imageExists) {
-                        echo "Image not found"
-                        sh "docker build -t bouteraayasmine-4twin5-g2-gestion-station-ski:1.0 ."
-                    } else {
-                        echo "Image exists"
-                    }
-                }
-            }
-        }
-
-
- stage('Docker Login') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
-                }
-            }
-        }
-         stage('Push Docker Image') {
+         stage('Build Docker Image') {
                     steps {
                         script {
-                            echo "Pushing Docker Image to Docker Hub..."
-                            sh 'docker push yasminebouteraa/bouteraayasmine-4twin5-g2-gestion-station-ski:1.0'
+                            def imageExists = sh(script: "docker images -q ${LOCAL_IMAGE}", returnStdout: true).trim()
+                            if (!imageExists) {
+                                echo "Image not found"
+                                sh "docker build -t ${LOCAL_IMAGE}  ."
+                            } else {
+                                echo "Image already exists"
+                            }
                         }
                     }
                 }
+                stage('Push to DockerHub') {
+                    steps {
+                        withCredentials([
+                            usernamePassword(
+                                credentialsId: 'DockerHub',
+                                usernameVariable: 'DOCKERHUB_USER',
+                                passwordVariable: 'DOCKERHUB_PASS'
+                            )
+                        ]) {
+                            sh "docker tag ${LOCAL_IMAGE} ${REMOTE_IMAGE}"
+                            sh "echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin"
+                            sh "docker push ${REMOTE_IMAGE}"
+                            sh "docker logout"
+                        }
+                    }
+                }
+
 
         stage('Docker Compose Up') {
             steps {
