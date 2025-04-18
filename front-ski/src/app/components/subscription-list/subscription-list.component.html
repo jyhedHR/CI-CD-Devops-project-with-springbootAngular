@@ -1,0 +1,254 @@
+<div class="container mt-4">
+                      <!-- En-tête avec titre et bouton d'ajout -->
+                      <div class="subscription-header">
+                        <h2 class="subscription-title">Liste des Abonnements</h2>
+                        <button class="btn-add" (click)="addNew()">
+                          <i class="fas fa-plus-circle"></i> Ajouter un abonnement
+                        </button>
+                      </div>
+                    
+                      <!-- Tableau des abonnements -->
+                      <div class="table-container">
+                        <table class="subscription-table">
+                          <thead>
+                            <tr>
+                              <th>ID</th>
+                              <th>Date Début</th>
+                              <th>Date Fin</th>
+                              <th>Prix</th>
+                              <th>Type</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let sub of subscriptions">
+                              <td><span class="id-badge">{{ sub.numSub }}</span></td>
+                              <td>{{ sub.startDate }}</td>
+                              <td>{{ sub.endDate }}</td>
+                              <td><span class="price-tag">{{ sub.price }} DT</span></td>
+                              <td><span class="type-badge">{{ sub.typeSub }}</span></td>
+                              <td class="actions-cell">
+                                <button class="btn-edit" (click)="editSubscription(sub.numSub)">
+                                  <i class="fas fa-edit"></i> Modifier
+                                </button>
+                                <button class="btn-delete" (click)="deleteSubscription(sub.numSub)">
+                                  <i class="fas fa-trash"></i> Supprimer
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    
+                    <style>
+                      /* Importation de la police Google Fonts */
+                      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+                    
+                      /* Styles généraux */
+                      .container {
+                        font-family: 'Poppins', sans-serif;
+                        max-width: 1200px;
+                        margin: 0 auto;
+                        padding: 20px;
+                      }
+                    
+                      /* En-tête avec titre et bouton d'ajout */
+                      .subscription-header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 25px;
+                        padding-bottom: 15px;
+                        border-bottom: 1px solid #e0e0e0;
+                      }
+                    
+                      .subscription-title {
+                        color: #333;
+                        font-weight: 600;
+                        margin: 0;
+                        position: relative;
+                      }
+                    
+                      .subscription-title::after {
+                        content: '';
+                        position: absolute;
+                        bottom: -10px;
+                        left: 0;
+                        width: 60px;
+                        height: 3px;
+                        background-color: #4361ee;
+                      }
+                    
+                      .btn-add {
+                        background: linear-gradient(to right, #4CAF50, #45a049);
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        padding: 10px 20px;
+                        font-size: 14px;
+                        font-weight: 500;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                      }
+                    
+                      .btn-add:hover {
+                        background: linear-gradient(to right, #45a049, #3d8b40);
+                        transform: translateY(-2px);
+                        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+                      }
+                    
+                      .btn-add i {
+                        font-size: 16px;
+                      }
+                    
+                      /* Conteneur du tableau */
+                      .table-container {
+                        background-color: white;
+                        border-radius: 10px;
+                        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+                        overflow: hidden;
+                      }
+                    
+                      /* Tableau des abonnements */
+                      .subscription-table {
+                        width: 100%;
+                        border-collapse: separate;
+                        border-spacing: 0;
+                      }
+                    
+                      .subscription-table thead tr {
+                        background-color: #f8f9fa;
+                      }
+                    
+                      .subscription-table th {
+                        color: #495057;
+                        font-weight: 600;
+                        text-transform: uppercase;
+                        font-size: 12px;
+                        letter-spacing: 0.5px;
+                        padding: 15px;
+                        text-align: left;
+                        border-bottom: 2px solid #e9ecef;
+                      }
+                    
+                      .subscription-table tbody tr {
+                        transition: all 0.3s ease;
+                      }
+                    
+                      .subscription-table tbody tr:hover {
+                        background-color: rgba(67, 97, 238, 0.05);
+                        transform: translateY(-2px);
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                      }
+                    
+                      .subscription-table td {
+                        padding: 15px;
+                        vertical-align: middle;
+                        border-bottom: 1px solid #e9ecef;
+                      }
+                    
+                      /* Badge pour l'ID */
+                      .id-badge {
+                        background-color: rgba(67, 97, 238, 0.1);
+                        color: #4361ee;
+                        font-weight: 600;
+                        padding: 5px 10px;
+                        border-radius: 20px;
+                        display: inline-block;
+                        min-width: 40px;
+                        text-align: center;
+                      }
+                    
+                      /* Badge pour le prix */
+                      .price-tag {
+                        font-weight: 600;
+                        color: #212529;
+                      }
+                    
+                      /* Badge pour le type */
+                      .type-badge {
+                        background-color: rgba(76, 201, 240, 0.1);
+                        color: #4cc9f0;
+                        font-weight: 500;
+                        padding: 5px 12px;
+                        border-radius: 20px;
+                        display: inline-block;
+                        text-align: center;
+                      }
+                    
+                      /* Cellule des actions */
+                      .actions-cell {
+                        display: flex;
+                        gap: 8px;
+                      }
+                    
+                      /* Boutons d'action */
+                      .btn-edit, .btn-delete {
+                        border: none;
+                        border-radius: 6px;
+                        padding: 8px 12px;
+                        font-size: 13px;
+                        font-weight: 500;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        gap: 5px;
+                        transition: all 0.3s ease;
+                      }
+                    
+                      .btn-edit {
+                        background-color: rgba(67, 97, 238, 0.1);
+                        color: #4361ee;
+                      }
+                    
+                      .btn-edit:hover {
+                        background-color: #4361ee;
+                        color: white;
+                      }
+                    
+                      .btn-delete {
+                        background-color: rgba(230, 57, 70, 0.1);
+                        color: #e63946;
+                      }
+                    
+                      .btn-delete:hover {
+                        background-color: #e63946;
+                        color: white;
+                      }
+                    
+                      /* Responsive */
+                      @media (max-width: 768px) {
+                        .subscription-header {
+                          flex-direction: column;
+                          align-items: flex-start;
+                          gap: 15px;
+                        }
+                    
+                        .btn-add {
+                          width: 100%;
+                          justify-content: center;
+                        }
+                    
+                        .subscription-table {
+                          display: block;
+                          overflow-x: auto;
+                        }
+                    
+                        .actions-cell {
+                          flex-direction: column;
+                        }
+                    
+                        .btn-edit, .btn-delete {
+                          width: 100%;
+                          justify-content: center;
+                        }
+                      }
+                    </style>
+                    
+                    <!-- Ajoutez ce lien dans votre index.html pour les icônes Font Awesome -->
+                    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> -->
