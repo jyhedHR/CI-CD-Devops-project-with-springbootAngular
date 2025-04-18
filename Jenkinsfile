@@ -35,13 +35,7 @@ pipeline {
             }
         }
 
-        stage('SonarQube') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh 'mvn sonar:sonar'
-                }
-            }
-        }
+       
 
         stage('Package JAR') {
             steps {
