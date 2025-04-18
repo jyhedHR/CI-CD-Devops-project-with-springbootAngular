@@ -52,10 +52,10 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    def imageExists = sh(script: "docker images -q bouteraayasmine-4twin5-g2-gestion-station-ski:1.0", returnStdout: true).trim()
+                    def imageExists = sh(script: "docker images -q gestion-station-ski:1.0", returnStdout: true).trim()
                     if (!imageExists) {
                         echo "Image not found"
-                        sh "docker build -t bouteraayasmine-4twin5-g2-gestion-station-ski:1.0 ."
+                        sh "docker build -t gestion-station-ski:1.0 ."
                     } else {
                         echo "Image exists"
                     }
@@ -63,20 +63,8 @@ pipeline {
             }
         }
 
-
-
-         stage('Push Docker Image') {
-                    steps {
-                        script {
-                            echo "Pushing Docker Image to Docker Hub..."
-                            sh 'docker push yasminebouteraa/bouteraayasmine-4twin5-g2-gestion-station-ski:1.0'
-                        }
-                    }
-                }
-
         stage('Docker Compose Up') {
             steps {
-          sh 'docker compose build'
                 sh 'docker compose up -d'
             }
         }
