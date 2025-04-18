@@ -93,25 +93,24 @@ pipeline {
             }
         }
 
-        stage('Mailing Test') {
-            steps {
-                echo "✅ Envoi de mail de test réussi."
-                mail to: 'nehdieya02@gmail.com',
-                     subject: 'Test simple Jenkins mail',
-                     body: 'This is a plain Jenkins email using the basic "mail" step.'
+        stage ('SonarQube analysis') {
+                    steps{
+                     withSonarQubeEnv('SonarQube') {
+                            sh 'mvn sonar:sonar '
+                }
             }
         }
     }
 
     post {
         success {
-            echo '✅ Pipeline exécuté avec succès.'
+            echo ' Pipeline exécuté avec succès.'
             mail to: 'nehdieya02@gmail.com',
                  subject: 'Succès du Pipeline - gestionski',
                  body: """
 Bonjour Eya,
 
-Le pipeline Jenkins s’est exécuté avec succès. 🎉
+Le pipeline Jenkins s’est exécuté avec succès.
 
 ✔ Projet : gestionski
 📅 Date : ${new Date()}
@@ -122,13 +121,13 @@ Jenkins
         }
 
         failure {
-            echo '❌ Le pipeline a échoué.'
+            echo ' Le pipeline a échoué.'
             mail to: 'nehdieya02@gmail.com',
                  subject: 'Échec du Pipeline - gestionski',
                  body: """
 Bonjour Eya,
 
-Le pipeline Jenkins a échoué. 🚨
+Le pipeline Jenkins a échoué.
 
 ✔ Projet : gestionski
 📅 Date : ${new Date()}
