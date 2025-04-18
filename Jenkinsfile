@@ -48,15 +48,15 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Deploy to Nexus') {
             steps {
-                sh 'docker build -t gestion-station-ski-instructor .'
+                sh 'mvn deploy -DskipTests'
             }
         }
 
-        stage('Run Docker Container') {
+        stage('Build Docker Image') {
             steps {
-                sh 'docker run -d -p 8089:8089 --name gestion-station-ski-instructor gestion-station-ski-instructor'
+                sh 'docker build -t gestion-station-ski-instructor .'
             }
         }
     }
