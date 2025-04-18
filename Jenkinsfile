@@ -42,11 +42,13 @@ pipeline {
             }
         }
 
-          stage('Nexus') {
-                      steps {
-                          sh 'mvn deploy -DskipTests'
-                      }
+          stage ('SonarQube analysis') {
+                      steps{
+                       withSonarQubeEnv('SonarQube') {
+                              sh 'mvn sonar:sonar '
                   }
+              }
+          }
 
 
         stage('Build Docker Image') {
@@ -93,11 +95,12 @@ pipeline {
             }
         }
 
-        stage ('SonarQube analysis') {
-                    steps{
-                     withSonarQubeEnv('SonarQube') {
-                            sh 'mvn sonar:sonar '
-                }
+        stage('Mailing Test') {
+            steps {
+                echo "Envoi de mail de test réussi."
+                mail to: 'nehdieya02@gmail.com',
+                     subject: 'Test simple Jenkins mail',
+                     body: 'Test stage for mail.'
             }
         }
     }
