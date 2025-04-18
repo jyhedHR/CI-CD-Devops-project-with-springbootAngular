@@ -17,7 +17,7 @@ services:
     ports:
       - 8089:8089
 
-  front-ski:
+  frontski:
     build:
       context: ./front-ski
     image: "gestion_skier_image_frontend"
