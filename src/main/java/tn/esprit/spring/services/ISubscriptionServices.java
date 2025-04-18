@@ -22,7 +22,7 @@ public interface ISubscriptionServices {
 	void removeSubscription (Long numSub);
 
 
-	void retrieveSubscriptions();
+	//void retrieveSubscriptions();
 
 	Iterable<Subscription> GetallSubscription();
 	Subscription assignSubscriptionDynamically(Long numSkier);

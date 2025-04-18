@@ -23,6 +23,17 @@ services:
     image: "gestion_skier_image_frontend"
     ports:
        - "4200:4200"
+  prometheus:
+      image: prom/prometheus
+      container_name: prometheus
+      ports:
+        - "9090:9090"
+      volumes:
+        - /home/vagrant/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      command:
+        - "--config.file=/etc/prometheus/prometheus.yml"
+      depends_on:
+        - gestionski
       
 
 

@@ -40,8 +40,7 @@ pipeline {
         }
 
 
-
-        stage('SonarQube') {
+stage('SonarQube') {
             steps {
                 withSonarQubeEnv('SonarQube') {
                     sh 'mvn sonar:sonar'
@@ -87,7 +86,7 @@ pipeline {
                     steps {
                      sh 'sudo docker compose down -v'
                            sh 'sudo docker compose build'
-                           sh 'sudo docker compose up '
+                           sh 'sudo docker compose up -d '
                     }
                 }
 
@@ -95,5 +94,22 @@ pipeline {
 
 }
 
+    post {
+        failure {
+            emailext(
+                to: 'jihedb01@gmail.com',
+                subject: "Échec du build : ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
+                body: """Le build ${env.BUILD_NUMBER} de ${env.JOB_NAME} a échoué.
+                        Voir les détails : ${env.BUILD_URL}"""
+            )
+        }
 
+        success {
+            emailext(
+                to: 'jihedb01@gmail.com',
+                subject: "Succès du build : ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
+                body: "Tout est bon ! ✅\nBuild #${env.BUILD_NUMBER} a réussi."
+            )
+        }
+    }
 }
