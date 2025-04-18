@@ -61,9 +61,19 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build and Push Docker Image') {
             steps {
-                sh 'docker build -t gestion-station-ski-instructor .'
+                script {
+                    sh 'docker build -t gestion-station-ski-instructor .'
+
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh '''
+                    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
+                    docker tag gestion-station-ski-instructor "$DOCKER_USER/gestion-station-ski-instructor:latest"
+                    docker push "$DOCKER_USER/gestion-station-ski-instructor:latest"
+                '''
+                    }
+                }
             }
         }
     }
