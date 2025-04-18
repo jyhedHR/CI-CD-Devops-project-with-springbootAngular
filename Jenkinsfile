@@ -47,6 +47,12 @@ pipeline {
                 sh 'mvn clean package -DskipTests'
             }
         }
+        
+        stage('test maven version') {
+            steps {
+                sh 'mvn -version'
+            }
+        }
 
         stage('Deploy to Nexus') {
             steps {
