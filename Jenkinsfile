@@ -21,13 +21,13 @@ pipeline {
             }
         }
 
-        stage('Maven Clean & Compile') {
+        stage('Clean & Compile') {
             steps {
                 sh 'mvn clean compile'
             }
         }
 
-        stage('Maven Test') {
+        stage('JUnit Test') {
             steps {
                 script {
                     sh 'mvn test -Dtest=InstructorServicesImplTest'
@@ -35,23 +35,17 @@ pipeline {
             }
         }
 
-        stage('Maven SonarQube Analysis') {
+        stage('SonarQube') {
             steps {
                 withSonarQubeEnv('SonarQube') {
                     sh 'mvn sonar:sonar'
                 }
             }
         }
-        stage('Maven Package JAR') {
+
+        stage('Package JAR') {
             steps {
                 sh 'mvn clean package -DskipTests'
-            }
-        }
-
-        stage('settings & version') {
-            steps {
-                sh 'mvn -version'
-                sh 'mvn help:effective-settings'
             }
         }
 
@@ -61,7 +55,7 @@ pipeline {
             }
         }
 
-        stage('Build and Push Docker Image') {
+        stage('Build and Push [Docker]') {
             steps {
                 script {
                     sh 'docker build -t gestion-station-ski-instructor .'
