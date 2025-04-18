@@ -81,11 +81,11 @@
 	</build>
 
 	<distributionManagement>
-		<repository>
+		<snapshotRepository>
 			<id>deploymentRepo</id>
 			<name>Project-Ski-Inst-Repo</name>
 			<url>http://localhost:8081/repository/maven-releases/</url>
-		</repository>
+		</snapshotRepository>
 	</distributionManagement>
 
 </project>
