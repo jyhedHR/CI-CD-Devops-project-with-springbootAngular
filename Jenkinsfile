@@ -47,10 +47,11 @@ pipeline {
                 sh 'mvn clean package -DskipTests'
             }
         }
-        
-        stage('test maven version') {
+
+        stage('settings & version') {
             steps {
                 sh 'mvn -version'
+                sh 'mvn help:effective-settings'
             }
         }
 
