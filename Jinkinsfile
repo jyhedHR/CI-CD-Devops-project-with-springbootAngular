@@ -47,6 +47,11 @@ stage('SonarQube') {
                 }
             }
         }
+         stage('Deploy') {
+                          steps {
+                              sh 'mvn deploy -DskipTests'
+                          }
+                      }
 
         stage('Package Projet') {
             steps {
@@ -77,11 +82,7 @@ stage('SonarQube') {
                 }
 
 
-      stage('Deploy') {
-                  steps {
-                      sh 'mvn deploy -DskipTests'
-                  }
-              }
+
  stage('Docker Compose Up') {
                     steps {
                      sh 'sudo docker compose down -v'
