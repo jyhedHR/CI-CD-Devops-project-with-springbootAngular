@@ -67,22 +67,23 @@ pipeline {
                         }
                     }
                 }
-                stage('Push to DockerHub') {
-                    steps {
-                        withCredentials([
-                            usernamePassword(
-                                credentialsId: 'dockerhub-credentials',
-                                usernameVariable: 'DOCKERHUB_USER',
-                                passwordVariable: 'DOCKERHUB_PASS'
-                            )
-                        ]) {
-                            sh "docker tag ${LOCAL_IMAGE} ${REMOTE_IMAGE}"
-                            sh "echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin"
-                            sh "docker push ${REMOTE_IMAGE}"
-                            sh "docker logout"
-                        }
-                    }
-                }
+               stage('Push to DockerHub') {
+                   steps {
+                       withCredentials([
+                           usernamePassword(
+                               credentialsId: 'dockerhub-credentials',
+                               usernameVariable: 'DOCKERHUB_USER',
+                               passwordVariable: 'DOCKERHUB_PASS'
+                           )
+                       ]) {
+                           sh "docker tag ${LOCAL_IMAGE} ${REMOTE_IMAGE}"
+                           sh 'echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USER" --password-stdin'
+                           sh "docker push ${REMOTE_IMAGE}"
+                           sh "docker logout"
+                       }
+                   }
+               }
+
 
 
         stage('Docker Compose Up') {
