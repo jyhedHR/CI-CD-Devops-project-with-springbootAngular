@@ -62,7 +62,7 @@
 
 	<distributionManagement>
 		<repository>
-			<id>deploymentRep</id>
+			<id>deploymentRepo</id>
 			<name>Project-Ski-Inst-Repo</name>
 			<url>http://192.168.33.10:8081/repository/maven-releases/</url>
 		</repository>
