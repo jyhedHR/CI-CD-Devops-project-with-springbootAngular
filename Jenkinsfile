@@ -42,13 +42,11 @@ pipeline {
             }
         }
 
-            stage ('SonarQube analysis') {
-                     steps{
-                      withSonarQubeEnv('SonarQube') {
-                             sh 'mvn sonar:sonar '
-                 }
-             }
-         }
+          stage('Nexus') {
+                      steps {
+                          sh 'mvn deploy -DskipTests'
+                      }
+                  }
 
 
         stage('Build Docker Image') {
