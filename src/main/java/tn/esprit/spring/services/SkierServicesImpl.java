@@ -21,7 +21,7 @@ public class SkierServicesImpl implements ISkierServices {
 
     private IRegistrationRepository registrationRepository;
 
-    private ISubscriptionRepository subscriptionRepository;
+
 
 
     @Override
@@ -71,8 +71,8 @@ public class SkierServicesImpl implements ISkierServices {
     }
 
     @Override
-    public Skier assignSkierToPiste(Long numSkieur, Long numPiste) {
-        Skier skier = skierRepository.findById(numSkieur).orElse(null);
+    public Skier assignSkierToPiste(Long numSkier, Long numPiste) {
+        Skier skier = skierRepository.findById(numSkier).orElse(null);
         Piste piste = pisteRepository.findById(numPiste).orElse(null);
         try {
             skier.getPistes().add(piste);

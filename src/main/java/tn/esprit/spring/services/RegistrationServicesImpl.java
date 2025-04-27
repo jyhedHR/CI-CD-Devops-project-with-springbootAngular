@@ -64,9 +64,9 @@ public class RegistrationServicesImpl implements  IRegistrationServices{
 
     @Transactional
     @Override
-    public Registration addRegistrationAndAssignToSkierAndCourse(Registration registration, Long numSkieur, Long numCours) {
-        Skier skier = skierRepository.findById(numSkieur).orElse(null);
-        Course course = courseRepository.findById(numCours).orElse(null);
+    public Registration addRegistrationAndAssignToSkierAndCourse(Registration registration, Long numSkier, Long numCourse) {
+        Skier skier = skierRepository.findById(numSkier).orElse(null);
+        Course course = courseRepository.findById(numCourse).orElse(null);
 
         if (skier == null || course == null) {
             return null;
@@ -77,8 +77,8 @@ public class RegistrationServicesImpl implements  IRegistrationServices{
             return null;
         }
 
-        int ageSkieur = Period.between(skier.getDateOfBirth(), LocalDate.now()).getYears();
-        log.info("Age " + ageSkieur);
+        int ageSkier = Period.between(skier.getDateOfBirth(), LocalDate.now()).getYears();
+        log.info("Age " + ageSkier);
 
         switch (course.getTypeCourse()) {
             case INDIVIDUAL:
@@ -86,7 +86,7 @@ public class RegistrationServicesImpl implements  IRegistrationServices{
                 return assignRegistration(registration, skier, course);
 
             case COLLECTIVE_CHILDREN:
-                if (ageSkieur < 16) {
+                if (ageSkier < 16) {
                     log.info("Ok CHILD !");
                     if (registrationRepository.countByCourseAndNumWeek(course, registration.getNumWeek()) < 6) {
                         log.info("Course successfully added !");
@@ -102,7 +102,7 @@ public class RegistrationServicesImpl implements  IRegistrationServices{
                 break;
 
             default:
-                if (ageSkieur >= 16) {
+                if (ageSkier >= 16) {
                     log.info("Ok ADULT !");
                     if (registrationRepository.countByCourseAndNumWeek(course, registration.getNumWeek()) < 6) {
                         log.info("Course successfully added !");

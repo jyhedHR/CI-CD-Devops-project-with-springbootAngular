@@ -16,7 +16,7 @@ public interface IRegistrationServices {
 	Registration retrieveRegistration(Long numRegistration);
 	Registration addRegistrationAndAssignToSkier(Registration registration, Long numSkier);
 	Registration assignRegistrationToCourse(Long numRegistration, Long numCourse);
-	Registration addRegistrationAndAssignToSkierAndCourse(Registration registration, Long numSkieur, Long numCours);
+	Registration addRegistrationAndAssignToSkierAndCourse(Registration registration, Long numSkier, Long numCourse);
 	List<Integer> numWeeksCourseOfInstructorBySupport(Long numInstructor, Support support);
 }
 

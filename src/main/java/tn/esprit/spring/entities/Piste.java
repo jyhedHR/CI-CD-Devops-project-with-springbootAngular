@@ -5,7 +5,7 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,6 +31,6 @@ public class Piste implements Serializable {
 	int slope;
 
 	@ManyToMany(mappedBy= "pistes")
-	Set<Skier> skiers;
+	private Set<Skier> skiers;
 	
 }
